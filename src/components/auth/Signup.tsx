@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from 'react';
 import { addTokensFromResponseToLocalStorage } from './util';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -20,6 +21,8 @@ export default function SignUp() {
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
   const [validSignup, setValidSignup] = useState<boolean>(false);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
+
+  const navigate = useNavigate();
 
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setEmail(event.target.value);
@@ -38,8 +41,8 @@ export default function SignUp() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const validPasswords = validatePasswords(password, passwordConfirmation);
-    console.log(validPasswords);
     if (!validPasswords) {
       return;
     }
@@ -50,7 +53,7 @@ export default function SignUp() {
       });
 
       addTokensFromResponseToLocalStorage(response);
-
+      navigate('/');
       setValidSignup(false);
     } catch (error) {
       setValidSignup(true);
