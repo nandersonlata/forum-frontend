@@ -8,12 +8,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
 import {useState} from "react";
 import {Grid, Link} from "@mui/material";
 import {addTokensFromResponseToLocalStorage} from "./util";
 
 const theme = createTheme();
+
+const axios = require('axios');
 
 export default function SignIn() {
     const [email, setEmail] = useState<string>('');
@@ -88,10 +89,12 @@ export default function SignIn() {
                             error={invalidLogin}
                         />
                         <Button
+                            id="sign-in-button"
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={!email && !password}
                         >
                             Sign In
                         </Button>
