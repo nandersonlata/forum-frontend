@@ -37,6 +37,7 @@ export default function SignUp() {
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
     setPasswordConfirmation(event.target.value);
+    validatePasswords(password, passwordConfirmation);
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -106,6 +107,8 @@ export default function SignUp() {
               error={validSignup}
             />
             <TextField
+              inputProps={{ 'aria-label': 'password' }}
+              data-testid="password-input"
               margin="normal"
               required
               fullWidth
@@ -117,6 +120,7 @@ export default function SignUp() {
               error={!passwordsMatch}
             />
             <TextField
+              inputProps={{ 'aria-label': 'Confirm Password' }}
               margin="normal"
               required
               fullWidth
@@ -138,10 +142,12 @@ export default function SignUp() {
               </Typography>
             )}
             <Button
+              id="sign-up-button"
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!email || !password || !passwordConfirmation}
             >
               Sign Up
             </Button>
