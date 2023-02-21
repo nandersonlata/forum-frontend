@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addTokensFromResponseToLocalStorage } from './util';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,31 +24,29 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    validatePasswords();
+  });
+
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setEmail(event.target.value);
   }
 
   function handlePasswordChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setPassword(event.target.value);
-    validatePasswords(password, passwordConfirmation);
   }
 
   function handlePasswordConfirmationChange(
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
     setPasswordConfirmation(event.target.value);
-    validatePasswords(password, passwordConfirmation);
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validPasswords = validatePasswords(password, passwordConfirmation);
-    if (!validPasswords) {
-      return;
-    }
     try {
-      const response = await axios.post('http://localhost:3001/auth/signup', {
+      const response = await axios.post('http://localhost:3003/auth/signup', {
         email,
         password,
       });
@@ -61,11 +59,7 @@ export default function SignUp() {
     }
   };
 
-  function validatePasswords(
-    password: string,
-    passwordConfirmation: string,
-  ): boolean {
-    console.log(password, passwordConfirmation);
+  function validatePasswords(): boolean {
     const passwordsMatch = password === passwordConfirmation;
     setPasswordsMatch(passwordsMatch);
     return passwordsMatch;
@@ -117,6 +111,7 @@ export default function SignUp() {
               type="password"
               id="password"
               onChange={handlePasswordChange}
+              onBlur={validatePasswords}
               error={!passwordsMatch}
             />
             <TextField
@@ -129,6 +124,7 @@ export default function SignUp() {
               type="password"
               id="password-confirmation"
               onChange={handlePasswordConfirmationChange}
+              onBlur={validatePasswords}
               error={!passwordsMatch}
             />
             {!passwordsMatch && (
@@ -147,7 +143,9 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={!email || !password || !passwordConfirmation}
+              disabled={
+                !email || !password || !passwordConfirmation || !passwordsMatch
+              }
             >
               Sign Up
             </Button>

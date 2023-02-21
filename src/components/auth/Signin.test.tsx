@@ -11,7 +11,7 @@ interface AxiosMock extends AxiosStatic {
 }
 
 jest.mock('axios');
-const mockedAxios = axios as AxiosMock;
+const axiosMock = axios as AxiosMock;
 
 describe('Signin component', () => {
   it('should not allow a signin click if email and password are not provided', () => {
@@ -43,7 +43,7 @@ describe('Signin component', () => {
   });
 
   it('inputs should have red borders when login fails', async () => {
-    mockedAxios.mockRejectedValue({ status: 403 });
+    axiosMock.mockRejectedValue({ status: 403 });
     const user = userEvent.setup();
     render(
       <MemoryRouter initialEntries={['/signin']}>
