@@ -10,13 +10,16 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function DeactivateAccount() {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+  const [errorOccurred, setErrorOccurred] = useState<boolean>(false);
 
   const theme = createTheme();
 
+  const navigate = useNavigate();
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setEmail(event.target.value);
   }
@@ -25,7 +28,7 @@ export default function DeactivateAccount() {
     setPassword(event.target.value);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     try {
@@ -33,17 +36,18 @@ export default function DeactivateAccount() {
         email,
         password,
       };
-      const response = axios.patch(
-        'http://localhost:3001/auth/deactivate',
-        body,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
+      await axios.patch('http://localhost:3001/auth/deactivate', body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
-      );
-    } catch (error) {}
+      });
+
+      navigate('/');
+    } catch (error) {
+      setErrorOccurred(true);
+    }
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -62,6 +66,11 @@ export default function DeactivateAccount() {
           <Typography component="h1" variant="h5">
             Deactivate Account
           </Typography>
+          {errorOccurred && (
+            <Typography variant="body1" sx={{ color: 'red' }}>
+              An error occurred. Please try again later.
+            </Typography>
+          )}
           <Box
             component="form"
             noValidate
@@ -101,6 +110,9 @@ export default function DeactivateAccount() {
               Deactivate
             </Button>
           </Box>
+          <Typography variant="body1">
+            Logging in will automatically reactivate your account
+          </Typography>
         </Box>
       </Container>
     </ThemeProvider>
