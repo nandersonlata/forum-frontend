@@ -42,7 +42,6 @@ export default function DeactivateAccount() {
           },
         },
       );
-      console.log(response);
     } catch (error) {}
   }
   return (
