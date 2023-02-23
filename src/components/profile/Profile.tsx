@@ -9,6 +9,7 @@ import {
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import Logout from '../auth/Logout';
 
 export default function Profile() {
   const theme = createTheme();
@@ -18,12 +19,13 @@ export default function Profile() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
+          <Logout />
           <Typography component="h1" variant="h5">
             Update Profile Settings
           </Typography>

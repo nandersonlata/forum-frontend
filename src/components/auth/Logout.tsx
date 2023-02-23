@@ -25,7 +25,7 @@ export default function Logout() {
   }
 
   return (
-    <IconButton onClick={handleLogout}>
+    <IconButton sx={{ marginLeft: 'auto' }} onClick={handleLogout}>
       <LogoutIcon />
     </IconButton>
   );
