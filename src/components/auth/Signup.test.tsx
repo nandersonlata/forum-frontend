@@ -16,7 +16,7 @@ const axiosMock = axios as AxiosMock;
 describe('Signup', () => {
   it('should not allow a sign up click if inputs have not been provided', () => {
     render(
-      <MemoryRouter initialEntries={['/signup']}>
+      <MemoryRouter>
         <SignUp />
       </MemoryRouter>,
     );
@@ -27,7 +27,7 @@ describe('Signup', () => {
   it('should allow a sign up click if inputs have been provided', async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={['/signin']}>
+      <MemoryRouter>
         <SignUp />
       </MemoryRouter>,
     );

@@ -16,7 +16,7 @@ const axiosMock = axios as AxiosMock;
 describe('Signin component', () => {
   it('should not allow a signin click if email and password are not provided', () => {
     render(
-      <MemoryRouter initialEntries={['/signin']}>
+      <MemoryRouter>
         <SignIn />
       </MemoryRouter>,
     );
@@ -27,7 +27,7 @@ describe('Signin component', () => {
   it('should allow a signin click if email and password are provided', async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={['/signin']}>
+      <MemoryRouter>
         <SignIn />
       </MemoryRouter>,
     );
@@ -46,7 +46,7 @@ describe('Signin component', () => {
     axiosMock.mockRejectedValue({ status: 403 });
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={['/signin']}>
+      <MemoryRouter>
         <SignIn />
       </MemoryRouter>,
     );

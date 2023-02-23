@@ -5,14 +5,6 @@ import DeactivateAccount from './DeactivateAccount';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 
-// interface AxiosMock extends AxiosStatic {
-//   mockResolvedValue: Function;
-//   mockRejectedValue: Function;
-// }
-//
-// jest.mock('axios');
-// const axiosMock = axios as AxiosMock;
-
 jest.mock('axios');
 
 describe('Deactivate Account', () => {
