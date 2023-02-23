@@ -11,6 +11,10 @@ import * as React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Logout from '../auth/Logout';
+import Person2Icon from '@mui/icons-material/Person2';
+import { IconButton } from '@mui/material';
+import Navigation from '../nav/Navigation';
 
 export default function DeactivateAccount() {
   const [email, setEmail] = useState<string | null>(null);
@@ -60,6 +64,7 @@ export default function DeactivateAccount() {
             alignItems: 'center',
           }}
         >
+          <Navigation />
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
