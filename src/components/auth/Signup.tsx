@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { addTokensFromResponseToLocalStorage } from './util';
+import { addTokensFromResponseToSessionStorage } from './util';
 import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
@@ -46,12 +46,12 @@ export default function SignUp() {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3003/auth/signup', {
+      const response = await axios.post('http://localhost:3001/auth/signup', {
         email,
         password,
       });
 
-      addTokensFromResponseToLocalStorage(response);
+      addTokensFromResponseToSessionStorage(response);
       navigate('/');
       setValidSignup(false);
     } catch (error) {

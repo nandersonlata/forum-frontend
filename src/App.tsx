@@ -5,15 +5,37 @@ import SignUp from './components/auth/Signup';
 import Profile from './components/profile/Profile';
 import DeactivateAccount from './components/profile/DeactivateAccount';
 import Home from './components/home/Home';
+import { RequireAuth } from './components/auth/PrivateRoute';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/deactivate" element={<DeactivateAccount />} />
-      <Route path="/home" element={<Home />} />
+      <Route
+        path="/profile"
+        element={
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/profile/deactivate"
+        element={
+          <RequireAuth>
+            <DeactivateAccount />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/home"
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
     </Routes>
   );
 }

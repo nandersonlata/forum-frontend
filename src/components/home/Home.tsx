@@ -3,22 +3,25 @@ import { Box, createTheme, IconButton, ThemeProvider } from '@mui/material';
 import Container from '@mui/material/Container';
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
   const theme = createTheme();
 
-  function handleLogout() {
+  async function handleLogout() {
     try {
-      const response = axios.post(
+      await axios.post(
         'http://localhost:3001/auth/logout',
         {},
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
           },
         },
       );
-      console.log(response);
+      sessionStorage.clear();
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -32,8 +35,6 @@ export default function Home() {
             marginTop: 2,
             display: 'flex',
             justifyContent: 'flex-end',
-            // flexDirection: 'column',
-            // alignItems: 'center',
           }}
         >
           <IconButton onClick={handleLogout}>

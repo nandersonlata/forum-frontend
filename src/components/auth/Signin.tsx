@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Grid, Link } from '@mui/material';
-import { addTokensFromResponseToLocalStorage } from './util';
+import { addTokensFromResponseToSessionStorage } from './util';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -39,7 +39,7 @@ export default function SignIn() {
         password,
       });
 
-      addTokensFromResponseToLocalStorage(response);
+      addTokensFromResponseToSessionStorage(response);
 
       navigate('/home');
     } catch (error) {
