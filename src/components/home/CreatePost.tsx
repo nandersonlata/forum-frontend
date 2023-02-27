@@ -12,6 +12,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import { PostDisplay } from './types';
+import { getAccessToken } from '../auth/util';
 
 type CreatePostProps = {
   posts: PostDisplay[];
@@ -30,12 +31,13 @@ export default function CreatePost(props: CreatePostProps) {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      const token = getAccessToken();
       const response = await axios.post(
         'http://localhost:3001/posts',
         { message },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );

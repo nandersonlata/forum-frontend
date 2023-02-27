@@ -11,16 +11,20 @@ export function addTokensFromResponseToSessionStorage(
 }
 
 export function isLoggedIn(): boolean {
-  const at = sessionStorage.getItem('access_token');
+  const at = getAccessToken();
 
   if (at == null) {
     return false;
   }
 
   const decodedToken: DecodedToken = jwtDecode(at);
-  if (Number(decodedToken.exp) < Date.now() / 1000) {
-    return false;
-  }
+  return !isTokenExpired(decodedToken);
+}
 
-  return true;
+function isTokenExpired(token: DecodedToken) {
+  return Number(token.exp) >= Date.now() / 1000;
+}
+
+export function getAccessToken(): string | null {
+  return sessionStorage.getItem('access_token');
 }

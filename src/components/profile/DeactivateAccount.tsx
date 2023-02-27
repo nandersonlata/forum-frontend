@@ -12,6 +12,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../nav/Navigation';
+import { getAccessToken } from '../auth/util';
 
 export default function DeactivateAccount() {
   const [email, setEmail] = useState<string | null>(null);
@@ -37,9 +38,10 @@ export default function DeactivateAccount() {
         email,
         password,
       };
+      const token = getAccessToken();
       await axios.patch('http://localhost:3001/auth/deactivate', body, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
