@@ -8,10 +8,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { addTokensFromResponseToSessionStorage } from './util';
 import { useNavigate } from 'react-router-dom';
+import { signup } from './service';
 
 const theme = createTheme();
 
@@ -42,22 +41,18 @@ export default function SignUp() {
     setPasswordConfirmation(event.target.value);
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/signup', {
-        email,
-        password,
-      });
+      await signup(email, password);
 
-      addTokensFromResponseToSessionStorage(response);
       navigate('/');
       setValidSignup(false);
     } catch (error) {
       setValidSignup(true);
     }
-  };
+  }
 
   function validatePasswords(): boolean {
     const passwordsMatch = password === passwordConfirmation;

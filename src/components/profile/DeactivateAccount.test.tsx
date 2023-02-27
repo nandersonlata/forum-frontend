@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import DeactivateAccount from './DeactivateAccount';
 import userEvent from '@testing-library/user-event';
+import axios from 'axios';
 
 jest.mock('axios');
 

@@ -18,7 +18,7 @@ export function isLoggedIn(): boolean {
   }
 
   const decodedToken: DecodedToken = jwtDecode(at);
-  return !isTokenExpired(decodedToken);
+  return isTokenExpired(decodedToken);
 }
 
 function isTokenExpired(token: DecodedToken) {

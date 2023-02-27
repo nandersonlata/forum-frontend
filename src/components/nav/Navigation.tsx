@@ -11,8 +11,8 @@ export default function Navigation() {
   return (
     <Box sx={{ marginLeft: 'auto' }}>
       {window.location.pathname !== '/profile' && (
-        <IconButton sx={{ mx: 3 }}>
-          <Person2Icon onClick={() => navigate('/profile')} />
+        <IconButton sx={{ mx: 3 }} onClick={() => navigate('/profile')}>
+          <Person2Icon />
         </IconButton>
       )}
       <Logout />

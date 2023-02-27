@@ -10,15 +10,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Grid, Link } from '@mui/material';
-import { addTokensFromResponseToSessionStorage } from './util';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { signin } from './service';
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [invalidLogin, setInvalidLogin] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -34,12 +33,7 @@ export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/auth/signin', {
-        email,
-        password,
-      });
-
-      addTokensFromResponseToSessionStorage(response);
+      await signin(email, password);
 
       navigate('/home');
     } catch (error) {
