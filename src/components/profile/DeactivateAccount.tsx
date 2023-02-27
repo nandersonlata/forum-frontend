@@ -9,14 +9,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../nav/Navigation';
-import { getAccessToken } from '../auth/util';
+import { deactivateAccount } from './service';
 
 export default function DeactivateAccount() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errorOccurred, setErrorOccurred] = useState<boolean>(false);
 
   const theme = createTheme();
@@ -34,16 +33,7 @@ export default function DeactivateAccount() {
     event.preventDefault();
 
     try {
-      const body = {
-        email,
-        password,
-      };
-      const token = getAccessToken();
-      await axios.patch('http://localhost:3001/auth/deactivate', body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await deactivateAccount(email, password);
 
       navigate('/');
     } catch (error) {
