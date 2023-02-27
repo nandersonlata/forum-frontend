@@ -1,5 +1,5 @@
 import { getAccessToken } from '../../auth/util';
-import axios from 'axios/index';
+import axios from 'axios';
 
 export async function deactivateAccount(email: string, password: string) {
   const token = getAccessToken();

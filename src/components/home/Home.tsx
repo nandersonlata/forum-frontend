@@ -3,29 +3,13 @@ import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './CreatePost';
-import axios from 'axios';
-import { GetPostsResponse, PostDisplay } from './types';
-import { getAccessToken } from '../auth/util';
+import { PostDisplay } from './types';
+import { getPosts } from './service';
 
 const theme = createTheme();
 
 export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
-
-  function getPosts() {
-    const token = getAccessToken();
-    return axios
-      .get('http://localhost:3001/posts', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((posts) => {
-        return posts.data.map((post: GetPostsResponse) => {
-          return { message: post.message };
-        });
-      });
-  }
 
   useEffect(() => {
     getPosts().then((data) => {

@@ -9,10 +9,9 @@ import {
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
-import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import { PostDisplay } from './types';
-import { getAccessToken } from '../auth/util';
+import { createPost } from './service';
 
 type CreatePostProps = {
   posts: PostDisplay[];
@@ -21,7 +20,7 @@ type CreatePostProps = {
 
 const theme = createTheme();
 export default function CreatePost(props: CreatePostProps) {
-  const [message, setMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>('');
   const [errorOccurred, setErrorOccurred] = useState<boolean>(false);
 
   function handleMessageChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -31,16 +30,7 @@ export default function CreatePost(props: CreatePostProps) {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const token = getAccessToken();
-      const response = await axios.post(
-        'http://localhost:3001/posts',
-        { message },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const response = await createPost(message);
       const newPost: PostDisplay = {
         message: response.data.message,
       };
