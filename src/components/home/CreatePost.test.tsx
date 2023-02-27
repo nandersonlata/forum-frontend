@@ -11,7 +11,7 @@ describe('Create Post', () => {
   it('should not allow a submission if no message has been given', async () => {
     render(
       <MemoryRouter>
-        <CreatePost />
+        <CreatePost posts={[]} setPosts={() => {}} />
       </MemoryRouter>,
     );
 
@@ -21,7 +21,7 @@ describe('Create Post', () => {
   it('should allow a submission if a message has been given', async () => {
     render(
       <MemoryRouter>
-        <CreatePost />
+        <CreatePost posts={[]} setPosts={() => {}} />
       </MemoryRouter>,
     );
 
@@ -39,7 +39,7 @@ describe('Create Post', () => {
 
     render(
       <MemoryRouter>
-        <CreatePost />
+        <CreatePost posts={[]} setPosts={() => {}} />
       </MemoryRouter>,
     );
 

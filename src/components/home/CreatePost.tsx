@@ -11,9 +11,15 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
+import { PostDisplay } from './types';
+
+type CreatePostProps = {
+  posts: PostDisplay[];
+  setPosts: React.Dispatch<React.SetStateAction<PostDisplay[]>>;
+};
 
 const theme = createTheme();
-export default function CreatePost() {
+export default function CreatePost(props: CreatePostProps) {
   const [message, setMessage] = useState<string | null>(null);
   const [errorOccurred, setErrorOccurred] = useState<boolean>(false);
 
@@ -33,7 +39,10 @@ export default function CreatePost() {
           },
         },
       );
-      console.log(response);
+      const newPost: PostDisplay = {
+        message: response.data.message,
+      };
+      props.setPosts([...props.posts, newPost]);
       setErrorOccurred(false);
     } catch (error) {
       setErrorOccurred(true);
