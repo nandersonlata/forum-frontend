@@ -1,4 +1,4 @@
-import { Box, createTheme, ThemeProvider } from '@mui/material';
+import { Box, createTheme, ThemeProvider, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
@@ -12,8 +12,14 @@ export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
 
   useEffect(() => {
-    getPosts().then((data) => {
-      setPosts(data);
+    getPosts().then((posts) => {
+      setPosts(
+        posts.sort(
+          (post1, post2) =>
+            new Date(post2.createdAt).getTime() -
+            new Date(post1.createdAt).getTime(),
+        ),
+      );
     });
   }, []);
 
@@ -29,9 +35,22 @@ export default function Home() {
           <Box>
             <CreatePost posts={posts} setPosts={setPosts} />
           </Box>
-          {posts.map((post) => (
-            <p>{post.message}</p>
-          ))}
+          <Box>
+            {posts.map((post) => (
+              <Box
+                sx={{
+                  borderRadius: '1px',
+                  borderColor: 'gray',
+                  borderStyle: 'solid',
+                  mx: '32%',
+                }}
+              >
+                <Typography variant="body1" sx={{ margin: '2%' }}>
+                  {post.message}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>

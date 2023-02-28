@@ -31,10 +31,12 @@ export default function CreatePost(props: CreatePostProps) {
     event.preventDefault();
     try {
       const response = await createPost(message);
+      const data = response.data;
       const newPost: PostDisplay = {
-        message: response.data.message,
+        message: data.message,
+        createdAt: data.createdAt,
       };
-      props.setPosts([...props.posts, newPost]);
+      props.setPosts([newPost, ...props.posts]);
       setErrorOccurred(false);
     } catch (error) {
       setErrorOccurred(true);

@@ -1,5 +1,7 @@
 export type PostDisplay = {
   message: string;
+
+  createdAt: string;
 };
 
 export type GetPostsResponse = {

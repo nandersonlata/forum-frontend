@@ -23,6 +23,6 @@ export async function getPosts(): Promise<PostDisplay[]> {
     },
   });
   return posts.data.map((post: GetPostsResponse) => {
-    return { message: post.message };
+    return { message: post.message, createdAt: post.createdAt };
   });
 }
