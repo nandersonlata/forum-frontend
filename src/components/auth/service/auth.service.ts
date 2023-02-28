@@ -1,5 +1,6 @@
 import { addTokensFromResponseToSessionStorage, getAccessToken } from '../util';
 import axios from 'axios';
+import { SignUpDto } from '../types';
 
 export async function logout() {
   try {
@@ -28,10 +29,9 @@ export async function signin(email: string, password: string) {
   addTokensFromResponseToSessionStorage(response);
 }
 
-export async function signup(email: string, password: string) {
+export async function signup(dto: SignUpDto) {
   const response = await axios.post('http://localhost:3001/auth/signup', {
-    email,
-    password,
+    ...dto,
   });
 
   addTokensFromResponseToSessionStorage(response);

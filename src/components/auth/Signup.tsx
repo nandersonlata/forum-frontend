@@ -18,7 +18,9 @@ export default function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
-  const [validSignup, setValidSignup] = useState<boolean>(false);
+  const [displayName, setDisplayName] = useState<string>('');
+  const [displayNameTaken, setDisplayNameTaken] = useState<boolean>(false);
+  const [emailTaken, setEmailTaken] = useState<boolean>(false);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -35,6 +37,12 @@ export default function SignUp() {
     setPassword(event.target.value);
   }
 
+  function handleDisplayNameChange(
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) {
+    setDisplayName(event.target.value);
+  }
+
   function handlePasswordConfirmationChange(
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
@@ -45,12 +53,24 @@ export default function SignUp() {
     event.preventDefault();
 
     try {
-      await signup(email, password);
+      const signUpDto = {
+        email,
+        password,
+        displayName,
+      };
+
+      await signup(signUpDto);
 
       navigate('/');
-      setValidSignup(false);
     } catch (error) {
-      setValidSignup(true);
+      // @ts-ignore
+      const errorMessage = error.response.data.message;
+      if (errorMessage === 'Email already taken') {
+        setEmailTaken(true);
+      }
+      if (errorMessage === 'Display name already taken') {
+        setDisplayNameTaken(true);
+      }
     }
   }
 
@@ -88,12 +108,23 @@ export default function SignUp() {
               margin="normal"
               required
               fullWidth
+              id="display-name"
+              label="Display Name"
+              name="display-name"
+              autoFocus
+              onChange={handleDisplayNameChange}
+              error={displayNameTaken}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               id="email"
               label="Email Address"
               name="email"
               autoFocus
               onChange={handleEmailChange}
-              error={validSignup}
+              error={emailTaken}
             />
             <TextField
               inputProps={{ 'aria-label': 'password' }}
@@ -127,9 +158,14 @@ export default function SignUp() {
                 Passwords do not match!
               </Typography>
             )}
-            {validSignup && (
+            {emailTaken && (
               <Typography variant="body1" sx={{ color: 'red' }}>
                 Email already taken, please use a different email!
+              </Typography>
+            )}
+            {displayNameTaken && (
+              <Typography variant="body1" sx={{ color: 'red' }}>
+                Display name already taken, please use a different display name!
               </Typography>
             )}
             <Button
@@ -139,7 +175,11 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               disabled={
-                !email || !password || !passwordConfirmation || !passwordsMatch
+                !email ||
+                !password ||
+                !passwordConfirmation ||
+                !passwordsMatch ||
+                !displayName
               }
             >
               Sign Up

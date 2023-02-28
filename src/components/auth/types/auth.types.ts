@@ -9,3 +9,9 @@ export type DecodedToken = {
   iat: string;
   exp: string;
 };
+
+export type SignUpDto = {
+  email: string;
+  password: string;
+  displayName: string;
+};
