@@ -13,6 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     getPosts().then((posts) => {
+      console.log(posts);
       setPosts(
         posts.sort(
           (post1, post2) =>

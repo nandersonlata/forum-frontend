@@ -17,12 +17,12 @@ export async function createPost(message: string) {
 
 export async function getPosts(): Promise<PostDisplay[]> {
   const token = getAccessToken();
-  const posts = await axios.get('http://localhost:3001/posts', {
+  const response = await axios.get('http://localhost:3001/posts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  return posts.data.map((post: GetPostsResponse) => {
+  return response.data.map((post: GetPostsResponse) => {
     return { message: post.message, createdAt: post.createdAt };
   });
 }
