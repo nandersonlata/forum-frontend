@@ -16,6 +16,9 @@ describe('Home', () => {
           createdAt: Date.now().toString(),
           updatedAt: Date.now().toString(),
           message: 'Hello World',
+          author: {
+            displayName: 'fakename',
+          },
         },
       ],
     });
@@ -27,6 +30,7 @@ describe('Home', () => {
     );
 
     await waitFor(() => {
+      expect(screen.getByText(/^fakename$/)).toBeInTheDocument();
       expect(screen.getByText(/^Hello World$/)).toBeInTheDocument();
     });
   });

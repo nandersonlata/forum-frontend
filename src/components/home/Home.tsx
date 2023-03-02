@@ -45,6 +45,9 @@ export default function Home() {
                   mx: '32%',
                 }}
               >
+                <Typography variant="h6" sx={{ mx: '1%' }}>
+                  {post.author.displayName}
+                </Typography>
                 <Typography variant="body1" sx={{ margin: '2%' }}>
                   {post.message}
                 </Typography>

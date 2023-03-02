@@ -2,7 +2,10 @@ import { getAccessToken } from '../../auth/util';
 import axios from 'axios';
 import { GetPostsResponse } from '../types';
 
-export async function createPost(message: string, authorId: number) {
+export async function createPost(
+  message: string,
+  authorId: number,
+): Promise<GetPostsResponse> {
   const token = getAccessToken();
   return await axios.post(
     'http://localhost:3001/posts',

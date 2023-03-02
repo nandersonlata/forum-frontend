@@ -32,11 +32,13 @@ export default function CreatePost(props: CreatePostProps) {
     event.preventDefault();
     try {
       const authorId = getCurrentUserId();
-      const response = await createPost(message, authorId);
-      const data = response.data;
+      const post = await createPost(message, authorId);
       const newPost: PostDisplay = {
-        message: data.message,
-        createdAt: data.createdAt,
+        message: post.message,
+        createdAt: post.createdAt,
+        author: {
+          displayName: post.author.displayName,
+        },
       };
       props.setPosts([newPost, ...props.posts]);
       setErrorOccurred(false);

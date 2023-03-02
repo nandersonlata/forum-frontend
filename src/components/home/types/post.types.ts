@@ -2,6 +2,10 @@ export type PostDisplay = {
   message: string;
 
   createdAt: string;
+
+  author: {
+    displayName: string;
+  };
 };
 
 export type GetPostsResponse = {
