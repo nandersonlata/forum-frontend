@@ -7,7 +7,7 @@ export async function createPost(
   authorId: number,
 ): Promise<GetPostsResponse> {
   const token = getAccessToken();
-  return await axios.post(
+  const response = await axios.post(
     'http://localhost:3001/posts',
     { message, authorId },
     {
@@ -16,6 +16,7 @@ export async function createPost(
       },
     },
   );
+  return response.data;
 }
 
 export async function getPosts(): Promise<GetPostsResponse[]> {

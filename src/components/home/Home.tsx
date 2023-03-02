@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './CreatePost';
-import { GetPostsResponse, PostDisplay } from './types';
+import { PostDisplay } from './types';
 import { getPosts } from './service';
 
 const theme = createTheme();
