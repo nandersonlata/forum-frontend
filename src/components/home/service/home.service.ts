@@ -1,12 +1,12 @@
 import { getAccessToken } from '../../auth/util';
 import axios from 'axios';
-import { GetPostsResponse, PostDisplay } from '../types';
+import { GetPostsResponse } from '../types';
 
-export async function createPost(message: string) {
+export async function createPost(message: string, authorId: number) {
   const token = getAccessToken();
   return await axios.post(
     'http://localhost:3001/posts',
-    { message },
+    { message, authorId },
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -15,14 +15,12 @@ export async function createPost(message: string) {
   );
 }
 
-export async function getPosts(): Promise<PostDisplay[]> {
+export async function getPosts(): Promise<GetPostsResponse[]> {
   const token = getAccessToken();
   const response = await axios.get('http://localhost:3001/posts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.data.map((post: GetPostsResponse) => {
-    return { message: post.message, createdAt: post.createdAt };
-  });
+  return response.data;
 }

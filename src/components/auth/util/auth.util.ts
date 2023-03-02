@@ -21,6 +21,24 @@ export function isLoggedIn(): boolean {
   return isTokenExpired(decodedToken);
 }
 
+function getDecodedToken(): DecodedToken | null {
+  const at = getAccessToken();
+
+  if (at == null) {
+    return null;
+  }
+  return jwtDecode(at);
+}
+
+export function getCurrentUserId(): number {
+  const decodedToken = getDecodedToken();
+
+  if (decodedToken == null) {
+    return -1;
+  }
+
+  return decodedToken.sub;
+}
 function isTokenExpired(token: DecodedToken) {
   return Number(token.exp) >= Date.now() / 1000;
 }

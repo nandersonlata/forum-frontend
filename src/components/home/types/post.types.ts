@@ -10,4 +10,7 @@ export type GetPostsResponse = {
   createdAt: string;
   updatedAt: string;
   message: string;
+  author: {
+    displayName: string;
+  };
 };

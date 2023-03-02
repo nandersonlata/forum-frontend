@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { PostDisplay } from './types';
 import { createPost } from './service';
+import { getCurrentUserId } from '../auth/util';
 
 type CreatePostProps = {
   posts: PostDisplay[];
@@ -30,7 +31,8 @@ export default function CreatePost(props: CreatePostProps) {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const response = await createPost(message);
+      const authorId = getCurrentUserId();
+      const response = await createPost(message, authorId);
       const data = response.data;
       const newPost: PostDisplay = {
         message: data.message,

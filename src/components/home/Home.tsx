@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './CreatePost';
-import { PostDisplay } from './types';
+import { GetPostsResponse, PostDisplay } from './types';
 import { getPosts } from './service';
 
 const theme = createTheme();
@@ -12,10 +12,9 @@ export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
 
   useEffect(() => {
-    getPosts().then((posts) => {
-      console.log(posts);
+    getPosts().then((postsResponse) => {
       setPosts(
-        posts.sort(
+        postsResponse.sort(
           (post1, post2) =>
             new Date(post2.createdAt).getTime() -
             new Date(post1.createdAt).getTime(),
