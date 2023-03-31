@@ -1,23 +1,18 @@
 import { getAccessToken } from '../../auth/util';
 import axios from 'axios';
-import { GetPostsResponse } from '../types';
+import { CreatePostData, GetPostsResponse } from '../types';
 import { getConfigProperty } from '../../../util/config';
 
 export async function createPost(
-  message: string,
-  authorId: number,
+  createPostData: CreatePostData,
 ): Promise<GetPostsResponse> {
   const token = getAccessToken();
   const apiUrl = getConfigProperty('REACT_APP_API_URL');
-  const response = await axios.post(
-    `${apiUrl}/posts`,
-    { message, authorId },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const response = await axios.post(`${apiUrl}/posts`, createPostData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
   return response.data;
 }
 

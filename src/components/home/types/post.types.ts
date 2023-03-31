@@ -18,3 +18,8 @@ export type GetPostsResponse = {
     displayName: string;
   };
 };
+
+export type CreatePostData = {
+  message: string;
+  authorId: number;
+};

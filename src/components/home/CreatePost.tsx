@@ -32,7 +32,11 @@ export default function CreatePost(props: CreatePostProps) {
     event.preventDefault();
     try {
       const authorId = getCurrentUserId();
-      const post = await createPost(message, authorId);
+      const createPostData = {
+        message,
+        authorId,
+      };
+      const post = await createPost(createPostData);
       const newPost: PostDisplay = {
         message: post.message,
         createdAt: post.createdAt,
