@@ -33,7 +33,7 @@ export default function DeactivateAccount() {
     event.preventDefault();
 
     try {
-      await deactivateAccount(email, password);
+      await deactivateAccount({ email, password });
 
       navigate('/');
     } catch (error) {
