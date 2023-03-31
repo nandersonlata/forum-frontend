@@ -1,7 +1,7 @@
 import { getAccessToken } from '../../auth/util';
 import axios from 'axios';
 import { getConfigProperty } from '../../../util/config';
-import { DeactivateAccountData } from '../types/profile.type';
+import { DeactivateAccountData } from '../types';
 
 export async function deactivateAccount(
   deactivateAccountData: DeactivateAccountData,
