@@ -1,12 +1,14 @@
 import { addTokensFromResponseToSessionStorage, getAccessToken } from '../util';
 import axios from 'axios';
 import { SignUpDto } from '../types';
+import { getConfigProperty } from '../../../util/config';
 
 export async function logout() {
   try {
     const token = getAccessToken();
+    const apiUrl = getConfigProperty('REACT_APP_API_URL');
     await axios.post(
-      'http://localhost:3001/auth/logout',
+      `${apiUrl}/auth/logout`,
       {},
       {
         headers: {
@@ -21,7 +23,8 @@ export async function logout() {
 }
 
 export async function signin(email: string, password: string) {
-  const response = await axios.post('http://localhost:3001/auth/signin', {
+  const apiUrl = getConfigProperty('REACT_APP_API_URL');
+  const response = await axios.post(`${apiUrl}/auth/signin`, {
     email,
     password,
   });
@@ -30,7 +33,9 @@ export async function signin(email: string, password: string) {
 }
 
 export async function signup(dto: SignUpDto) {
-  const response = await axios.post('http://localhost:3001/auth/signup', {
+  const apiUrl = getConfigProperty('REACT_APP_API_URL');
+  console.log(apiUrl);
+  const response = await axios.post(`${apiUrl}/auth/signup`, {
     ...dto,
   });
 

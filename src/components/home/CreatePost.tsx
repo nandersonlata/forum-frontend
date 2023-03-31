@@ -78,7 +78,7 @@ export default function CreatePost(props: CreatePostProps) {
               fullWidth
               variant="contained"
               sx={{ mt: 1, mb: 2 }}
-              disabled={!message && message.trim().length > 0}
+              disabled={!message && message.trim().length == 0}
             >
               Create Post
             </Button>
