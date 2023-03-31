@@ -78,6 +78,7 @@ export default function SignIn() {
               error={invalidLogin}
             />
             <TextField
+              data-testid="password"
               margin="normal"
               required
               fullWidth
