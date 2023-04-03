@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
 import { Link } from '@mui/material';
@@ -138,7 +138,6 @@ export default function SignUp() {
               type="password"
               id="password"
               onChange={handlePasswordChange}
-              // onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             <TextField
@@ -151,7 +150,6 @@ export default function SignUp() {
               type="password"
               id="password-confirmation"
               onChange={handlePasswordConfirmationChange}
-              // onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             <SignUpErrors
