@@ -162,7 +162,7 @@ export default function SignUp() {
                 Passwords do not match!
               </Typography>
             )}
-            {password.length > 0 && !validPassword && (
+            {password.trim().length > 0 && !validPassword && (
               <Typography variant="body1" sx={{ color: 'red' }}>
                 Passwords must be between 5 and 25 characters long and contain
                 at least 1 uppercase and lowercase letter and number

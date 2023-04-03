@@ -66,9 +66,9 @@ schema
   .spaces();
 
 export function isValidPassword(password: string): boolean {
-  return schema.validate(password) as boolean;
+  return schema.validate(password.trim()) as boolean;
 }
 
 export function isValidEmail(email: string): boolean {
-  return EmailValidator.validate(email);
+  return EmailValidator.validate(email.trim());
 }
