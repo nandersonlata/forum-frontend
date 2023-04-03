@@ -98,7 +98,7 @@ export default function SignIn() {
                   my: 1.5,
                 }}
               >
-                <Typography style={{ color: 'red' }}>
+                <Typography sx={{ color: 'red' }}>
                   Invalid email/password
                 </Typography>
               </Box>
