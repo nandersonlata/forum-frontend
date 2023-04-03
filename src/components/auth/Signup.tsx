@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
 import { Link } from '@mui/material';
 import { isValidEmail, isValidPassword } from './util';
+import { SignUpErrors } from './SignUpErrors';
 
 const theme = createTheme();
 
@@ -24,6 +25,8 @@ export default function SignUp() {
   const [displayNameTaken, setDisplayNameTaken] = useState<boolean>(false);
   const [emailTaken, setEmailTaken] = useState<boolean>(false);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
+  const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [validPassword, setValidPassword] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -32,11 +35,15 @@ export default function SignUp() {
   });
 
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setEmail(event.target.value);
+    const emailInput = event.target.value;
+    setEmail(emailInput);
+    setValidEmail(isValidEmail(emailInput));
   }
 
   function handlePasswordChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setPassword(event.target.value);
+    const passwordInput = event.target.value;
+    setPassword(passwordInput);
+    setValidPassword(isValidPassword(passwordInput));
   }
 
   function handleDisplayNameChange(
@@ -81,9 +88,6 @@ export default function SignUp() {
     setPasswordsMatch(passwordsMatch);
     return passwordsMatch;
   }
-
-  const validEmail = isValidEmail(email);
-  const validPassword = isValidPassword(password);
 
   return (
     <ThemeProvider theme={theme}>
@@ -157,32 +161,15 @@ export default function SignUp() {
               onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
-            {!passwordsMatch && (
-              <Typography variant="body1" sx={{ color: 'red' }}>
-                Passwords do not match!
-              </Typography>
-            )}
-            {password.trim().length > 0 && !validPassword && (
-              <Typography variant="body1" sx={{ color: 'red' }}>
-                Passwords must be between 5 and 25 characters long and contain
-                at least 1 uppercase and lowercase letter and number
-              </Typography>
-            )}
-            {emailTaken && (
-              <Typography variant="body1" sx={{ color: 'red' }}>
-                Email already taken, please use a different email!
-              </Typography>
-            )}
-            {displayNameTaken && (
-              <Typography variant="body1" sx={{ color: 'red' }}>
-                Display name already taken, please use a different display name!
-              </Typography>
-            )}
-            {email.trim().length > 0 && !validEmail && (
-              <Typography variant="body1" sx={{ color: 'red' }}>
-                Please provide a valid email
-              </Typography>
-            )}
+            <SignUpErrors
+              emailTaken={emailTaken}
+              displayNameTaken={displayNameTaken}
+              validEmail={validEmail}
+              validPassword={validPassword}
+              passwordsMatch={passwordsMatch}
+              password={password}
+              email={email}
+            />
             <Button
               id="sign-up-button"
               type="submit"
@@ -195,8 +182,8 @@ export default function SignUp() {
                 !passwordConfirmation ||
                 !passwordsMatch ||
                 !displayName ||
-                !isValidPassword(password) ||
-                !isValidEmail(email)
+                !validPassword ||
+                !validEmail
               }
             >
               Sign Up

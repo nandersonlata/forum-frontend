@@ -4,7 +4,6 @@ import React from 'react';
 import SignUp from './Signup';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
 
@@ -147,7 +146,7 @@ describe('Signup', () => {
     await user.type(displayNameInput, 'fakedisplayname');
 
     const emailInput = screen.getByLabelText('Email', { exact: false });
-    await user.type(emailInput, 'test');
+    await user.type(emailInput, 'test@email.com');
 
     const passwordInput = screen.getByLabelText(/^password/i);
     await user.type(passwordInput, 'testPassword1');
