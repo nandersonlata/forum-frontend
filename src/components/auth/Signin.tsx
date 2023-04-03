@@ -90,12 +90,25 @@ export default function SignIn() {
               onChange={handlePasswordChange}
               error={invalidLogin}
             />
+            {invalidLogin && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  my: 1.5,
+                }}
+              >
+                <Typography style={{ color: 'red' }}>
+                  Invalid email/password
+                </Typography>
+              </Box>
+            )}
             <Button
               id="sign-in-button"
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mb: 2 }}
               disabled={!password || !email}
             >
               Sign In

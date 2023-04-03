@@ -157,4 +157,15 @@ describe('Signup', () => {
     const signUpButton = screen.getByText('Sign Up');
     await user.click(signUpButton);
   });
+
+  it('should have a link to the signin page', () => {
+    render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
+
+    const signInLink = screen.getByText('Already have an account? Sign in');
+    expect(signInLink).toBeInTheDocument();
+  });
 });

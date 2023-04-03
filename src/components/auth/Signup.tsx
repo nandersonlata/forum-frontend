@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
+import { Grid, Link } from '@mui/material';
 
 const theme = createTheme();
 
@@ -122,7 +123,6 @@ export default function SignUp() {
               id="email"
               label="Email Address"
               name="email"
-              autoFocus
               onChange={handleEmailChange}
               error={emailTaken}
             />
@@ -184,6 +184,11 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            <Grid item>
+              <Link href="/" variant="body2">
+                {'Already have an account? Sign in'}
+              </Link>
+            </Grid>
           </Box>
         </Box>
       </Container>

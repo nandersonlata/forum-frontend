@@ -29,7 +29,7 @@ describe('<SignIn />', () => {
     cy.findByText('Sign In').click();
   });
 
-  it('should have red borders around input if login attempt fails', () => {
+  it('should have red borders around input and invalid login message if login attempt fails', () => {
     cy.mount(
       <BrowserRouter>
         <SignIn />
@@ -51,5 +51,7 @@ describe('<SignIn />', () => {
 
     emailAddressInput.should('have.class', 'Mui-error');
     passwordInput.should('have.class', 'Mui-error');
+
+    cy.findByText('Invalid email/password').should('exist');
   });
 });
