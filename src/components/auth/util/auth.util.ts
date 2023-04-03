@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { DecodedToken, Tokens } from '../types';
 import jwtDecode from 'jwt-decode';
+import PasswordValidator from 'password-validator';
 
 export function addTokensFromResponseToSessionStorage(
   response: AxiosResponse<any, any>,
@@ -45,4 +46,24 @@ function isTokenExpired(token: DecodedToken) {
 
 export function getAccessToken(): string | null {
   return sessionStorage.getItem('access_token');
+}
+
+const schema = new PasswordValidator();
+schema
+  .is()
+  .min(5)
+  .is()
+  .max(25)
+  .has()
+  .uppercase()
+  .has()
+  .lowercase()
+  .has()
+  .digits(1)
+  .has()
+  .not()
+  .spaces();
+
+export function isValidPassword(password: string): boolean {
+  return schema.validate(password) as boolean;
 }

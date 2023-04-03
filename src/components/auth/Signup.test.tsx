@@ -35,11 +35,11 @@ describe('Signup', () => {
     await user.type(emailInput, 'test@email.com');
 
     const passwordInput = screen.getByLabelText(/^password/i);
-    await user.type(passwordInput, 'testPassword');
+    await user.type(passwordInput, 'testPassword1');
 
     const passwordConfirmationInput =
       screen.getByLabelText(/^confirm password$/i);
-    await user.type(passwordConfirmationInput, 'testPassword');
+    await user.type(passwordConfirmationInput, 'testPassword1');
 
     const signUpButton = screen.getByText('Sign Up');
     expect(signUpButton).toBeEnabled();
@@ -105,11 +105,11 @@ describe('Signup', () => {
       await user.type(emailInput, 'test@email.com');
 
       const passwordInput = screen.getByLabelText(/^password/i);
-      await user.type(passwordInput, 'testPassword');
+      await user.type(passwordInput, 'testPassword1');
 
       const passwordConfirmationInput =
         screen.getByLabelText(/^confirm password$/i);
-      await user.type(passwordConfirmationInput, 'testPassword');
+      await user.type(passwordConfirmationInput, 'testPassword1');
 
       const signUpButton = screen.getByText('Sign Up');
       await user.click(signUpButton);
@@ -148,11 +148,11 @@ describe('Signup', () => {
     await user.type(emailInput, 'test');
 
     const passwordInput = screen.getByLabelText(/^password/i);
-    await user.type(passwordInput, 'testPassword');
+    await user.type(passwordInput, 'testPassword1');
 
     const passwordConfirmationInput =
       screen.getByLabelText(/^confirm password$/i);
-    await user.type(passwordConfirmationInput, 'testPassword');
+    await user.type(passwordConfirmationInput, 'testPassword1');
 
     const signUpButton = screen.getByText('Sign Up');
     await user.click(signUpButton);
@@ -168,4 +168,34 @@ describe('Signup', () => {
     const signInLink = screen.getByText('Already have an account? Sign in');
     expect(signInLink).toBeInTheDocument();
   });
+
+  it.each(['invalidpassword', 'inv', 'test', 'test1'])(
+    'should not allow a sign up click if the password is not strong enough',
+    async (password: string) => {
+      const user = userEvent.setup();
+      render(
+        <MemoryRouter>
+          <SignUp />
+        </MemoryRouter>,
+      );
+
+      const displayNameInput = screen.getByLabelText('Display Name', {
+        exact: false,
+      });
+      await user.type(displayNameInput, 'fakedisplayname');
+
+      const emailInput = screen.getByLabelText('Email', { exact: false });
+      await user.type(emailInput, 'test');
+
+      const passwordInput = screen.getByLabelText(/^password/i);
+      await user.type(passwordInput, password);
+
+      const passwordConfirmationInput =
+        screen.getByLabelText(/^confirm password$/i);
+      await user.type(passwordConfirmationInput, password);
+
+      const signUpButton = screen.getByText('Sign Up');
+      expect(signUpButton).toBeDisabled();
+    },
+  );
 });

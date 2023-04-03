@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
 import { Grid, Link } from '@mui/material';
+import PasswordValidator from 'password-validator';
+import { isValidPassword } from './util';
 
 const theme = createTheme();
 
@@ -27,7 +29,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    validatePasswords();
+    doPasswordsMatch();
   });
 
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -75,7 +77,7 @@ export default function SignUp() {
     }
   }
 
-  function validatePasswords(): boolean {
+  function doPasswordsMatch(): boolean {
     const passwordsMatch = password === passwordConfirmation;
     setPasswordsMatch(passwordsMatch);
     return passwordsMatch;
@@ -137,7 +139,7 @@ export default function SignUp() {
               type="password"
               id="password"
               onChange={handlePasswordChange}
-              onBlur={validatePasswords}
+              onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             <TextField
@@ -150,12 +152,18 @@ export default function SignUp() {
               type="password"
               id="password-confirmation"
               onChange={handlePasswordConfirmationChange}
-              onBlur={validatePasswords}
+              onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             {!passwordsMatch && (
               <Typography variant="body1" sx={{ color: 'red' }}>
                 Passwords do not match!
+              </Typography>
+            )}
+            {!isValidPassword(password) && (
+              <Typography variant="body1" sx={{ color: 'red' }}>
+                Passwords must be between 5 and 25 characters long and contain
+                at least 1 uppercase and lowercase letter and number
               </Typography>
             )}
             {emailTaken && (
@@ -179,7 +187,8 @@ export default function SignUp() {
                 !password ||
                 !passwordConfirmation ||
                 !passwordsMatch ||
-                !displayName
+                !displayName ||
+                !isValidPassword(password)
               }
             >
               Sign Up
