@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
 import { Link } from '@mui/material';
-import { isValidPassword } from './util';
+import { isValidEmail, isValidPassword } from './util';
 
 const theme = createTheme();
 
@@ -82,6 +82,9 @@ export default function SignUp() {
     return passwordsMatch;
   }
 
+  const validEmail = isValidEmail(email);
+  const validPassword = isValidPassword(password);
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -125,7 +128,7 @@ export default function SignUp() {
               label="Email Address"
               name="email"
               onChange={handleEmailChange}
-              error={emailTaken}
+              error={(email.length > 0 && !validEmail) || emailTaken}
             />
             <TextField
               inputProps={{ 'aria-label': 'password' }}
@@ -159,7 +162,7 @@ export default function SignUp() {
                 Passwords do not match!
               </Typography>
             )}
-            {password.length > 0 && !isValidPassword(password) && (
+            {password.length > 0 && !validPassword && (
               <Typography variant="body1" sx={{ color: 'red' }}>
                 Passwords must be between 5 and 25 characters long and contain
                 at least 1 uppercase and lowercase letter and number
@@ -175,6 +178,11 @@ export default function SignUp() {
                 Display name already taken, please use a different display name!
               </Typography>
             )}
+            {email.trim().length > 0 && !validEmail && (
+              <Typography variant="body1" sx={{ color: 'red' }}>
+                Please provide a valid email
+              </Typography>
+            )}
             <Button
               id="sign-up-button"
               type="submit"
@@ -187,7 +195,8 @@ export default function SignUp() {
                 !passwordConfirmation ||
                 !passwordsMatch ||
                 !displayName ||
-                !isValidPassword(password)
+                !isValidPassword(password) ||
+                !isValidEmail(email)
               }
             >
               Sign Up

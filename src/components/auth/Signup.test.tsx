@@ -4,6 +4,7 @@ import React from 'react';
 import SignUp from './Signup';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
 
@@ -29,6 +30,7 @@ describe('Signup', () => {
     const displayNameInput = screen.getByLabelText('Display Name', {
       exact: false,
     });
+
     await user.type(displayNameInput, 'fakedisplayname');
 
     const emailInput = screen.getByLabelText('Email', { exact: false });
@@ -196,6 +198,43 @@ describe('Signup', () => {
 
       const signUpButton = screen.getByText('Sign Up');
       expect(signUpButton).toBeDisabled();
+    },
+  );
+
+  it.each(['invalidEmail', '@test.com', 'email@', '@', '.com'])(
+    'should display an error and not allow submission of form if the email provided does not match email pattern',
+    async (email: string) => {
+      const user = userEvent.setup();
+      render(
+        <MemoryRouter>
+          <SignUp />
+        </MemoryRouter>,
+      );
+
+      const displayNameInput = screen.getByLabelText('Display Name', {
+        exact: false,
+      });
+      await user.type(displayNameInput, 'fakedisplayname');
+
+      const emailInput = screen.getByLabelText('Email', { exact: false });
+      await user.type(emailInput, email);
+
+      const passwordInput = screen.getByLabelText(/^password/i);
+      await user.type(passwordInput, 'ValidPassword1');
+
+      const passwordConfirmationInput =
+        screen.getByLabelText(/^confirm password$/i);
+      await user.type(passwordConfirmationInput, 'ValidPassword1');
+
+      const signUpButton = screen.getByText('Sign Up');
+      expect(signUpButton).toBeDisabled();
+
+      const emailNotValidMessage = screen.getByText(
+        'Please provide a valid email',
+      );
+      expect(emailNotValidMessage).toBeInTheDocument();
+
+      expect(emailInput.closest('div')).toHaveClass('Mui-error');
     },
   );
 });

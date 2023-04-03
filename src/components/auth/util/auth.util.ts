@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { DecodedToken, Tokens } from '../types';
 import jwtDecode from 'jwt-decode';
 import PasswordValidator from 'password-validator';
+import * as EmailValidator from 'email-validator';
 
 export function addTokensFromResponseToSessionStorage(
   response: AxiosResponse<any, any>,
@@ -66,4 +67,8 @@ schema
 
 export function isValidPassword(password: string): boolean {
   return schema.validate(password) as boolean;
+}
+
+export function isValidEmail(email: string): boolean {
+  return EmailValidator.validate(email);
 }
