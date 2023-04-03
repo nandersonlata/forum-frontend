@@ -30,10 +30,6 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    doPasswordsMatch();
-  });
-
   function handleEmailChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const emailInput = event.target.value;
     setEmail(emailInput);
@@ -55,7 +51,10 @@ export default function SignUp() {
   function handlePasswordConfirmationChange(
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
-    setPasswordConfirmation(event.target.value);
+    const passwordConfirmationInput = event.target.value;
+    setPasswordConfirmation(passwordConfirmationInput);
+    const passwordsMatch = password === passwordConfirmationInput;
+    setPasswordsMatch(passwordsMatch);
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -81,12 +80,6 @@ export default function SignUp() {
         setDisplayNameTaken(true);
       }
     }
-  }
-
-  function doPasswordsMatch(): boolean {
-    const passwordsMatch = password === passwordConfirmation;
-    setPasswordsMatch(passwordsMatch);
-    return passwordsMatch;
   }
 
   return (
@@ -145,7 +138,7 @@ export default function SignUp() {
               type="password"
               id="password"
               onChange={handlePasswordChange}
-              onBlur={doPasswordsMatch}
+              // onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             <TextField
@@ -158,7 +151,7 @@ export default function SignUp() {
               type="password"
               id="password-confirmation"
               onChange={handlePasswordConfirmationChange}
-              onBlur={doPasswordsMatch}
+              // onBlur={doPasswordsMatch}
               error={!passwordsMatch}
             />
             <SignUpErrors
