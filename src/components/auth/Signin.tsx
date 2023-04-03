@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Grid, Link } from '@mui/material';
+import { Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { signin } from './service';
 
@@ -113,11 +113,9 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+            <Link href="/signup" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
           </Box>
         </Box>
       </Container>

@@ -11,8 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from './service';
-import { Grid, Link } from '@mui/material';
-import PasswordValidator from 'password-validator';
+import { Link } from '@mui/material';
 import { isValidPassword } from './util';
 
 const theme = createTheme();
