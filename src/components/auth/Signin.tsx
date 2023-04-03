@@ -95,7 +95,7 @@ export default function SignIn() {
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
-                  my: 1.5,
+                  my: 1,
                 }}
               >
                 <Typography sx={{ color: 'red' }}>
@@ -108,7 +108,7 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 2, mb: 2 }}
               disabled={!password || !email}
             >
               Sign In
