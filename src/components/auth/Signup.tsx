@@ -160,7 +160,7 @@ export default function SignUp() {
                 Passwords do not match!
               </Typography>
             )}
-            {!isValidPassword(password) && (
+            {password.length > 0 && !isValidPassword(password) && (
               <Typography variant="body1" sx={{ color: 'red' }}>
                 Passwords must be between 5 and 25 characters long and contain
                 at least 1 uppercase and lowercase letter and number
@@ -193,11 +193,9 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid item>
-              <Link href="/" variant="body2">
-                {'Already have an account? Sign in'}
-              </Link>
-            </Grid>
+            <Link href="/" variant="body2">
+              {'Already have an account? Sign in'}
+            </Link>
           </Box>
         </Box>
       </Container>
