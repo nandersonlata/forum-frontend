@@ -6,6 +6,7 @@ import Profile from './components/profile/Profile';
 import DeactivateAccount from './components/profile/DeactivateAccount';
 import Home from './components/home/Home';
 import { RequireAuth } from './components/auth/PrivateRoute';
+import { NotFound } from './components/NotFound';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           </RequireAuth>
         }
       />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 }
