@@ -1,11 +1,15 @@
 export type PostDisplay = {
   message: string;
 
+  authorId: number;
+
   createdAt: string;
 
   author: {
     displayName: string;
   };
+
+  editing?: boolean;
 };
 
 export type GetPostsResponse = {
