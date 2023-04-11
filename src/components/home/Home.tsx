@@ -8,12 +8,13 @@ import {
 import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
-import CreatePost from './CreatePost';
+import CreatePost from './post/CreatePost';
 import { PostDisplay } from './types';
 import { getPosts } from './service';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../auth/util';
-import { UpdatePost } from './UpdatePost';
+import { UpdatePost } from './post/UpdatePost';
+import { DisplayPost } from './post/DisplayPost';
 
 const theme = createTheme();
 
@@ -77,14 +78,7 @@ export default function Home() {
                 {post.editing ? (
                   <UpdatePost post={post} setEditing={setEditing} />
                 ) : (
-                  <Box>
-                    <Typography variant="h6" sx={{ mx: '1%' }}>
-                      {post.author.displayName}
-                    </Typography>
-                    <Typography variant="body1" sx={{ margin: '2%' }}>
-                      {post.message}
-                    </Typography>
-                  </Box>
+                  <DisplayPost post={post} />
                 )}
                 <Box>
                   {currentUserId === post.authorId && !post.editing && (

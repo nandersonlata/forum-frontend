@@ -1,8 +1,8 @@
-import * as authUtil from '../auth/util/auth.util';
+import * as authUtil from '../../auth/util/auth.util';
 import axios from 'axios';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Home from './Home';
+import Home from '../Home';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 

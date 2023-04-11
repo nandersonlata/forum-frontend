@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { PostDisplay, UpdatePostRequestBody } from './types';
-import { updatePost } from './service';
+import { PostDisplay, UpdatePostRequestBody } from '../types';
+import { updatePost } from '../service';
 
 type UpdatePostProps = {
   post: PostDisplay;
-  setEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditing: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export function UpdatePost(props: UpdatePostProps) {
