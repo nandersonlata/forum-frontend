@@ -13,13 +13,14 @@ import { PostDisplay } from './types';
 import { getPosts } from './service';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../auth/util';
-import TextField from '@mui/material/TextField';
+import { UpdatePost } from './UpdatePost';
 
 const theme = createTheme();
 
 export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
   const [editing, setEditing] = useState<boolean>(false);
+  const [originalPostMessage, setOriginalPostMessage] = useState<string>('');
   const currentUserId = getCurrentUserId();
 
   useEffect(() => {
@@ -44,9 +45,9 @@ export default function Home() {
   function startEditPost(post: PostDisplay) {
     post.editing = true;
     setEditing(true);
+    setOriginalPostMessage(post.message);
   }
 
-  function handleUpdatePost(post: PostDisplay) {}
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
@@ -74,37 +75,7 @@ export default function Home() {
                 key={index}
               >
                 {post.editing ? (
-                  <Box
-                    component="form"
-                    onSubmit={() => handleUpdatePost(post)}
-                    noValidate
-                    sx={{ mt: 1 }}
-                  >
-                    <Typography variant="h6" sx={{ mx: '1%' }}>
-                      {post.author.displayName}
-                    </Typography>
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="update-post-message"
-                      name="update-post-message-input"
-                      autoComplete="update-post-message-input"
-                      autoFocus
-                      multiline
-                      minRows={3}
-                      value={post.message}
-                    />
-                    <Button
-                      id="update-post-button"
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 1, mb: 2 }}
-                    >
-                      Update Post
-                    </Button>
-                  </Box>
+                  <UpdatePost post={post} setEditing={setEditing} />
                 ) : (
                   <Box>
                     <Typography variant="h6" sx={{ mx: '1%' }}>
@@ -127,6 +98,7 @@ export default function Home() {
                       onClick={() => {
                         setEditing(false);
                         post.editing = false;
+                        post.message = originalPostMessage;
                       }}
                     >
                       Cancel

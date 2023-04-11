@@ -27,3 +27,9 @@ export type CreatePostData = {
   message: string;
   authorId: number;
 };
+
+export type UpdatePostRequestBody = {
+  userId: number;
+  newMessage: string;
+  createdAt: string;
+};
