@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import { PostDisplay } from '../types';
 
 type DisplayPostProps = {

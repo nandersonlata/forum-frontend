@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  createTheme,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { Box, createTheme, ThemeProvider } from '@mui/material';
 import Container from '@mui/material/Container';
 import React, { useEffect, useState } from 'react';
 import Navigation from '../nav/Navigation';
