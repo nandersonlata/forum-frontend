@@ -97,4 +97,32 @@ describe('Update Post', () => {
       ).toBeInTheDocument();
     });
   });
+
+  it('should update page to show updated post message when updating the post succeeds', async () => {
+    // @ts-ignore
+    axios.patch.mockResolvedValue({
+      response: {
+        status: 200,
+      },
+    });
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const editButton = await screen.findByText('Edit', { exact: false });
+    await user.click(editButton);
+
+    const updatePostMessageBox = screen.getByText('Hello World 3');
+    await user.click(updatePostMessageBox);
+    await user.type(updatePostMessageBox, 'New message');
+
+    const updatePostButton = screen.getByText('Update Post');
+    await user.click(updatePostButton);
+
+    const newMessageText = screen.getByText('Hello World 3New message');
+    expect(newMessageText).toBeInTheDocument();
+  });
 });

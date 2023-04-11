@@ -23,6 +23,9 @@ export function UpdatePost(props: UpdatePostProps) {
     };
     try {
       await updatePost(updatePostRequestBody);
+      setEditing(false);
+      post.editing = false;
+      post.message = newMessage;
     } catch (error) {
       // log error
       setShowErrorMessage(true);
