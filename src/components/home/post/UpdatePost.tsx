@@ -15,38 +15,33 @@ export function UpdatePost(props: UpdatePostProps) {
   const [newMessage, setNewMessage] = useState<string>('');
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
-  async function handleUpdatePost() {
+  const canSubmitUpdate = !(
+    newMessage.length === 0 || newMessage === originalMessage
+  );
+
+  function handleUpdatePost() {
     const updatePostRequestBody: UpdatePostRequestBody = {
       authorId: post.authorId,
       createdAt: post.createdAt,
       newMessage,
     };
-    try {
-      await updatePost(updatePostRequestBody);
-      completeEdit(post, newMessage);
-    } catch (error) {
-      // log error
-      setShowErrorMessage(true);
-    }
-  }
 
-  async function handleSpecialKeyPressed(
-    event: React.KeyboardEvent<HTMLDivElement>,
-  ) {
-    if (event.key === 'Enter' && event.shiftKey) {
-      setNewMessage(newMessage + '\n');
-    } else if (event.key === 'Enter') {
-      event.preventDefault();
-      await handleUpdatePost();
-    }
+    updatePost(updatePostRequestBody)
+      .then(() => {
+        completeEdit(post, newMessage);
+      })
+      .catch((error) => {
+        // log error
+        setShowErrorMessage(true);
+      });
   }
 
   return (
     <Box
       component="form"
-      onSubmit={async (event) => {
+      onSubmit={(event) => {
         event.preventDefault();
-        await handleUpdatePost();
+        handleUpdatePost();
       }}
       noValidate
       sx={{ mt: 1 }}
@@ -67,7 +62,6 @@ export function UpdatePost(props: UpdatePostProps) {
         minRows={3}
         defaultValue={post.message}
         onChange={(event) => setNewMessage(event.target.value)}
-        onKeyDown={async (event) => await handleSpecialKeyPressed(event)}
       />
       {showErrorMessage && (
         <Box
@@ -88,7 +82,7 @@ export function UpdatePost(props: UpdatePostProps) {
         fullWidth
         variant="contained"
         sx={{ mt: 1, mb: 2 }}
-        disabled={newMessage.length === 0 || newMessage === originalMessage}
+        disabled={!canSubmitUpdate}
       >
         Update Post
       </Button>
