@@ -88,6 +88,10 @@ describe('Update Post', () => {
     const editButton = await screen.findByText('Edit', { exact: false });
     await user.click(editButton);
 
+    const updatePostMessageBox = screen.getByText('Hello World 3');
+    await user.click(updatePostMessageBox);
+    await user.type(updatePostMessageBox, 'New message');
+
     const updatePostButton = screen.getByText('Update Post');
     await user.click(updatePostButton);
 
@@ -152,11 +156,7 @@ describe('Update Post', () => {
     await user.click(editButton);
 
     const updatePostMessageBox = screen.getByText('Hello World 3');
-    // await user.click(updatePostMessageBox);
-    await user.type(
-      updatePostMessageBox,
-      '{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}',
-    );
+    user.clear(updatePostMessageBox);
     await user.type(updatePostMessageBox, 'Hello World 3');
 
     expect(screen.getByText('Update Post')).toBeDisabled();

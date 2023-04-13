@@ -1,6 +1,6 @@
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 import Container from '@mui/material/Container';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './post/CreatePost';
 import { PostDisplay } from './types';
@@ -55,6 +55,12 @@ export default function Home() {
     });
   }
 
+  function completeEdit(post: PostDisplay, newMessage: string) {
+    post.editing = false;
+    post.message = newMessage;
+    setPostToUpdate(defaultPostToUpdate);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
@@ -83,26 +89,27 @@ export default function Home() {
               >
                 {post.editing ? (
                   <UpdatePost
-                    postToUpdate={postToUpdate}
-                    setPostToUpdate={setPostToUpdate}
+                    post={post}
+                    originalMessage={post.message}
+                    completeEdit={completeEdit}
                   />
                 ) : (
                   <DisplayPost post={post} />
                 )}
                 <Box>
-                  {currentUserId === post.authorId && !post.editing && (
-                    <Link to={'#'} onClick={() => startEditPost(post)}>
-                      Edit
-                    </Link>
-                  )}
+                  {currentUserId === post.authorId &&
+                    !post.editing &&
+                    !postToUpdate.editing && (
+                      <Link to={'#'} onClick={() => startEditPost(post)}>
+                        Edit
+                      </Link>
+                    )}
                   {currentUserId === post.authorId && post.editing && (
                     <Link
                       to={'#'}
-                      onClick={() => {
-                        post.editing = false;
-                        post.message = postToUpdate?.originalMessage as string;
-                        setPostToUpdate(defaultPostToUpdate);
-                      }}
+                      onClick={() =>
+                        completeEdit(post, postToUpdate.originalMessage)
+                      }
                     >
                       Cancel
                     </Link>
