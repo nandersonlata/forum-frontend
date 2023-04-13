@@ -29,7 +29,7 @@ export type CreatePostData = {
 };
 
 export type UpdatePostRequestBody = {
-  userId: number;
+  authorId: number;
   newMessage: string;
   createdAt: string;
 };

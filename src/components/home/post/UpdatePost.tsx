@@ -18,7 +18,7 @@ export function UpdatePost(props: UpdatePostProps) {
   async function handleUpdatePost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const updatePostRequestBody: UpdatePostRequestBody = {
-      userId: post.authorId,
+      authorId: post.authorId,
       createdAt: post.createdAt,
       newMessage,
     };
