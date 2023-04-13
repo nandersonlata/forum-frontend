@@ -125,4 +125,40 @@ describe('Update Post', () => {
     const newMessageText = screen.getByText('Hello World 3New message');
     expect(newMessageText).toBeInTheDocument();
   });
+
+  it('should not allow an edit to be submitted if the text area is empty', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const editButton = await screen.findByText('Edit', { exact: false });
+    await user.click(editButton);
+
+    expect(screen.getByText('Update Post')).toBeDisabled();
+  });
+
+  it('should not allow an edit to be submitted if the text area contains the same text as the original message', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const editButton = await screen.findByText('Edit', { exact: false });
+    await user.click(editButton);
+
+    const updatePostMessageBox = screen.getByText('Hello World 3');
+    // await user.click(updatePostMessageBox);
+    await user.type(
+      updatePostMessageBox,
+      '{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}',
+    );
+    await user.type(updatePostMessageBox, 'Hello World 3');
+
+    expect(screen.getByText('Update Post')).toBeDisabled();
+  });
 });

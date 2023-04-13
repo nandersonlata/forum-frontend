@@ -1,35 +1,34 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { PostDisplay, UpdatePostRequestBody } from '../types';
 import { updatePost } from '../service';
+import { defaultPostToUpdate } from '../Home';
 
 type UpdatePostProps = {
-  post: PostDisplay;
+  postToUpdate: PostDisplay & { originalMessage: string };
   setPostToUpdate: React.Dispatch<
-    React.SetStateAction<
-      (PostDisplay & { originalMessage: string }) | undefined
-    >
+    React.SetStateAction<PostDisplay & { originalMessage: string }>
   >;
 };
 
 export function UpdatePost(props: UpdatePostProps) {
-  const { post, setPostToUpdate } = props;
+  const { postToUpdate, setPostToUpdate } = props;
   const [newMessage, setNewMessage] = useState<string>('');
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
   async function handleUpdatePost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const updatePostRequestBody: UpdatePostRequestBody = {
-      userId: post.authorId,
-      createdAt: post.createdAt,
+      userId: postToUpdate.authorId,
+      createdAt: postToUpdate.createdAt,
       newMessage,
     };
     try {
       await updatePost(updatePostRequestBody);
-      post.editing = false;
-      post.message = newMessage;
-      setPostToUpdate(undefined);
+      postToUpdate.editing = false;
+      postToUpdate.message = newMessage;
+      setPostToUpdate(defaultPostToUpdate);
     } catch (error) {
       // log error
       setShowErrorMessage(true);
@@ -44,7 +43,7 @@ export function UpdatePost(props: UpdatePostProps) {
       sx={{ mt: 1 }}
     >
       <Typography variant="h6" sx={{ mx: '1%' }}>
-        {post.author.displayName}
+        {postToUpdate.author.displayName}
       </Typography>
       <TextField
         margin="normal"
@@ -57,7 +56,7 @@ export function UpdatePost(props: UpdatePostProps) {
         autoFocus
         multiline
         minRows={3}
-        defaultValue={post.message}
+        defaultValue={postToUpdate.message}
         onChange={(event) => setNewMessage(event.target.value)}
       />
       {showErrorMessage && (
@@ -79,6 +78,9 @@ export function UpdatePost(props: UpdatePostProps) {
         fullWidth
         variant="contained"
         sx={{ mt: 1, mb: 2 }}
+        disabled={
+          newMessage.length === 0 || newMessage === postToUpdate.originalMessage
+        }
       >
         Update Post
       </Button>

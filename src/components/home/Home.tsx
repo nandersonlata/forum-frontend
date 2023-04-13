@@ -11,12 +11,21 @@ import { UpdatePost } from './post/UpdatePost';
 import { DisplayPost } from './post/DisplayPost';
 
 const theme = createTheme();
+export const defaultPostToUpdate = {
+  message: '',
+  authorId: 0,
+  createdAt: '',
+  author: {
+    displayName: '',
+  },
+  originalMessage: '',
+};
 
 export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
   const [postToUpdate, setPostToUpdate] = useState<
     PostDisplay & { originalMessage: string }
-  >();
+  >(defaultPostToUpdate);
   const currentUserId = getCurrentUserId();
 
   useMemo(() => {
@@ -73,7 +82,10 @@ export default function Home() {
                 key={index}
               >
                 {post.editing ? (
-                  <UpdatePost post={post} setPostToUpdate={setPostToUpdate} />
+                  <UpdatePost
+                    postToUpdate={postToUpdate}
+                    setPostToUpdate={setPostToUpdate}
+                  />
                 ) : (
                   <DisplayPost post={post} />
                 )}
@@ -89,7 +101,7 @@ export default function Home() {
                       onClick={() => {
                         post.editing = false;
                         post.message = postToUpdate?.originalMessage as string;
-                        setPostToUpdate(undefined);
+                        setPostToUpdate(defaultPostToUpdate);
                       }}
                     >
                       Cancel
