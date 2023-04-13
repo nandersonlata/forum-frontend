@@ -161,4 +161,25 @@ describe('Update Post', () => {
 
     expect(screen.getByText('Update Post')).toBeDisabled();
   });
+
+  it('should allow a submission of an update using the enter key', async () => {
+    const axiosMock = jest
+      .spyOn(axios, 'patch')
+      .mockResolvedValue(Promise.resolve({ count: 1 }));
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const editButton = await screen.findByText('Edit', { exact: false });
+    await user.click(editButton);
+    const updatePostMessageBox = screen.getByText('Hello World 3');
+    user.clear(updatePostMessageBox);
+    await user.type(updatePostMessageBox, 'new message');
+
+    await user.type(updatePostMessageBox, '{enter}');
+    expect(axiosMock).toHaveBeenCalled();
+  });
 });

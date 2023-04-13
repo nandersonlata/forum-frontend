@@ -15,8 +15,7 @@ export function UpdatePost(props: UpdatePostProps) {
   const [newMessage, setNewMessage] = useState<string>('');
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
-  async function handleUpdatePost(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleUpdatePost() {
     const updatePostRequestBody: UpdatePostRequestBody = {
       authorId: post.authorId,
       createdAt: post.createdAt,
@@ -31,10 +30,24 @@ export function UpdatePost(props: UpdatePostProps) {
     }
   }
 
+  async function handleSpecialKeyPressed(
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) {
+    if (event.key === 'Enter' && event.shiftKey) {
+      setNewMessage(newMessage + '\n');
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      await handleUpdatePost();
+    }
+  }
+
   return (
     <Box
       component="form"
-      onSubmit={(event) => handleUpdatePost(event)}
+      onSubmit={async (event) => {
+        event.preventDefault();
+        await handleUpdatePost();
+      }}
       noValidate
       sx={{ mt: 1 }}
     >
@@ -54,6 +67,7 @@ export function UpdatePost(props: UpdatePostProps) {
         minRows={3}
         defaultValue={post.message}
         onChange={(event) => setNewMessage(event.target.value)}
+        onKeyDown={async (event) => await handleSpecialKeyPressed(event)}
       />
       {showErrorMessage && (
         <Box
