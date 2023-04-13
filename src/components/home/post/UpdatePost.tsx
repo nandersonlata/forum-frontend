@@ -6,11 +6,15 @@ import { updatePost } from '../service';
 
 type UpdatePostProps = {
   post: PostDisplay;
-  setEditing: React.Dispatch<SetStateAction<boolean>>;
+  setPostToUpdate: React.Dispatch<
+    React.SetStateAction<
+      (PostDisplay & { originalMessage: string }) | undefined
+    >
+  >;
 };
 
 export function UpdatePost(props: UpdatePostProps) {
-  const { post, setEditing } = props;
+  const { post, setPostToUpdate } = props;
   const [newMessage, setNewMessage] = useState<string>('');
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
@@ -23,9 +27,9 @@ export function UpdatePost(props: UpdatePostProps) {
     };
     try {
       await updatePost(updatePostRequestBody);
-      setEditing(false);
       post.editing = false;
       post.message = newMessage;
+      setPostToUpdate(undefined);
     } catch (error) {
       // log error
       setShowErrorMessage(true);

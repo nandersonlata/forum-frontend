@@ -1,6 +1,6 @@
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 import Container from '@mui/material/Container';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './post/CreatePost';
 import { PostDisplay } from './types';
@@ -14,11 +14,12 @@ const theme = createTheme();
 
 export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
-  const [editing, setEditing] = useState<boolean>(false);
-  const [originalPostMessage, setOriginalPostMessage] = useState<string>('');
+  const [postToUpdate, setPostToUpdate] = useState<
+    PostDisplay & { originalMessage: string }
+  >();
   const currentUserId = getCurrentUserId();
 
-  useEffect(() => {
+  useMemo(() => {
     getPosts().then((postsResponse) => {
       postsResponse.sort(
         (post1, post2) =>
@@ -35,12 +36,14 @@ export default function Home() {
           : posts,
       );
     });
-  }, []);
+  }, [posts]);
 
   function startEditPost(post: PostDisplay) {
     post.editing = true;
-    setEditing(true);
-    setOriginalPostMessage(post.message);
+    setPostToUpdate({
+      ...post,
+      originalMessage: post.message,
+    });
   }
 
   return (
@@ -70,7 +73,7 @@ export default function Home() {
                 key={index}
               >
                 {post.editing ? (
-                  <UpdatePost post={post} setEditing={setEditing} />
+                  <UpdatePost post={post} setPostToUpdate={setPostToUpdate} />
                 ) : (
                   <DisplayPost post={post} />
                 )}
@@ -84,9 +87,9 @@ export default function Home() {
                     <Link
                       to={'#'}
                       onClick={() => {
-                        setEditing(false);
                         post.editing = false;
-                        post.message = originalPostMessage;
+                        post.message = postToUpdate?.originalMessage as string;
+                        setPostToUpdate(undefined);
                       }}
                     >
                       Cancel
