@@ -1,17 +1,26 @@
-import { Box, createTheme, ThemeProvider } from '@mui/material';
+import {
+  Box,
+  Button,
+  createTheme,
+  Modal,
+  ThemeProvider,
+  Typography,
+} from '@mui/material';
 import Container from '@mui/material/Container';
 import React, { useMemo, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './post/CreatePost';
 import { PostDisplay } from './types';
-import { getPosts } from './service';
+import { deletePost, getPosts } from './service';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../auth/util';
 import { UpdatePost } from './post/UpdatePost';
 import { DisplayPost } from './post/DisplayPost';
+import { DeletePostModal } from './post/DeletePostModal';
 
 const theme = createTheme();
 export const defaultPostToUpdate = {
+  id: 0,
   message: '',
   authorId: 0,
   createdAt: '',
@@ -26,6 +35,9 @@ export default function Home() {
   const [postToUpdate, setPostToUpdate] = useState<
     PostDisplay & { originalMessage: string }
   >(defaultPostToUpdate);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const handleOpen = () => setDeleteModalOpen(true);
+
   const currentUserId = getCurrentUserId();
 
   useMemo(() => {
@@ -96,7 +108,13 @@ export default function Home() {
                 ) : (
                   <DisplayPost post={post} />
                 )}
-                <Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column',
+                  }}
+                >
                   {currentUserId === post.authorId &&
                     !post.editing &&
                     !postToUpdate.editing && (
@@ -114,7 +132,21 @@ export default function Home() {
                       Cancel
                     </Link>
                   )}
+                  <Box>
+                    {currentUserId === post.authorId && (
+                      <Link to={'#'} onClick={handleOpen}>
+                        Delete
+                      </Link>
+                    )}
+                  </Box>
                 </Box>
+                {deleteModalOpen && (
+                  <DeletePostModal
+                    post={post}
+                    open={deleteModalOpen}
+                    setOpen={setDeleteModalOpen}
+                  />
+                )}
               </Box>
             ))}
           </Box>

@@ -41,6 +41,7 @@ export function getCurrentUserId(): number {
 
   return decodedToken.sub;
 }
+
 function isTokenExpired(token: DecodedToken) {
   return Number(token.exp) >= Date.now() / 1000;
 }

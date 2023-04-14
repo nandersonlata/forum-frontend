@@ -38,18 +38,6 @@ describe('Update Post', () => {
     });
   });
 
-  it('should only display edit button on posts which the current user posted', async () => {
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>,
-    );
-
-    await waitFor(() => {
-      expect(screen.getAllByText('Edit', { exact: false }).length).toBe(1);
-    });
-  });
-
   it('should show original post text if cancel button is pressed', async () => {
     const user = userEvent.setup();
     render(

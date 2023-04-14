@@ -1,4 +1,5 @@
 export type PostDisplay = {
+  id: number;
   message: string;
 
   authorId: number;
@@ -32,4 +33,8 @@ export type UpdatePostRequestBody = {
   authorId: number;
   newMessage: string;
   createdAt: string;
+};
+
+export type DeletePostRequestBody = {
+  postId: number;
 };
