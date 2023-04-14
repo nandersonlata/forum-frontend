@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  createTheme,
-  Modal,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { Box, createTheme, ThemeProvider } from '@mui/material';
 import Container from '@mui/material/Container';
 import React, { useMemo, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './post/CreatePost';
 import { PostDisplay } from './types';
-import { deletePost, getPosts } from './service';
+import { getPosts } from './service';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../auth/util';
 import { UpdatePost } from './post/UpdatePost';
