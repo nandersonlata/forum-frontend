@@ -38,6 +38,7 @@ export default function CreatePost(props: CreatePostProps) {
       };
       const post = await createPost(createPostData);
       const newPost: PostDisplay = {
+        id: post.id,
         authorId: post.authorId,
         message: post.message,
         createdAt: post.createdAt,
