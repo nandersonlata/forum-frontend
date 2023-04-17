@@ -50,7 +50,7 @@ export default function Home() {
           : posts,
       );
     });
-  }, [posts]);
+  }, []);
 
   function startEditPost(post: PostDisplay) {
     post.editing = true;
@@ -64,6 +64,9 @@ export default function Home() {
     post.editing = false;
     post.message = newMessage;
     setPostToUpdate(defaultPostToUpdate);
+  }
+  function removePostFromPosts(postToRemove: PostDisplay) {
+    setPosts(posts.filter((post) => post !== postToRemove));
   }
 
   return (
@@ -138,6 +141,7 @@ export default function Home() {
                     post={post}
                     open={deleteModalOpen}
                     setOpen={setDeleteModalOpen}
+                    removePostFromPosts={removePostFromPosts}
                   />
                 )}
               </Box>

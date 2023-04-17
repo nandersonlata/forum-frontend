@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Home from '../Home';
 import * as homeService from '../service/home.service';
@@ -122,5 +122,25 @@ describe('delete post modal', () => {
 
     const deleteModal = screen.queryByTestId('delete-modal');
     expect(deleteModal).toBeNull();
+  });
+
+  it('should remove the deleted post from the list of displayed posts if deletion was successful', async () => {
+    jest
+      .spyOn(homeService, 'deletePost')
+      .mockResolvedValue(Promise.resolve(200));
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const deleteLink = await screen.findByText('Delete', { exact: false });
+    await user.click(deleteLink);
+
+    const yesButton = await screen.findByText('Yes');
+    await user.click(yesButton);
+
+    expect(screen.queryByText('Hello World')).toBeNull();
   });
 });

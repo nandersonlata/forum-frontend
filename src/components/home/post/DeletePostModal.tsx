@@ -19,15 +19,20 @@ type DeletePostProps = {
   post: PostDisplay;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  removePostFromPosts: (post: PostDisplay) => void;
 };
+
 export function DeletePostModal(props: DeletePostProps) {
-  const { post, open, setOpen } = props;
+  const { post, open, setOpen, removePostFromPosts } = props;
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const handleClose = () => setOpen(false);
 
   function handleDeletePost(post: PostDisplay) {
     deletePost({ postId: post.id })
-      .then(() => handleClose())
+      .then(() => {
+        removePostFromPosts(post);
+        handleClose();
+      })
       .catch((error) => {
         // log error
         setShowErrorMessage(true);
