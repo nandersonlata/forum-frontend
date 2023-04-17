@@ -37,6 +37,14 @@ function App() {
           </RequireAuth>
         }
       />
+      <Route
+        path="/users/:displayName"
+        element={
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        }
+      />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
