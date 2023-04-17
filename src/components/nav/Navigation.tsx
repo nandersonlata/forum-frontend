@@ -9,10 +9,10 @@ export default function Navigation() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ marginLeft: 'auto' }}>
+    <Box sx={{ display: 'flex' }}>
       {window.location.pathname !== '/profile' && (
         <IconButton sx={{ mx: 3 }} onClick={() => navigate('/profile')}>
-          <Person2Icon />
+          <Person2Icon color="primary" />
         </IconButton>
       )}
       <Logout />

@@ -151,7 +151,9 @@ export default function Home() {
                       >
                         <DeleteIcon
                           color="primary"
-                          sx={{ '&:hover': { color: 'black' } }}
+                          sx={{
+                            '&:hover': { color: 'black' },
+                          }}
                         />
                       </Link>
                     )}
