@@ -46,14 +46,14 @@ describe('Update Post', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await screen.findByText('Edit', { exact: false });
+    const editButton = await screen.findByLabelText('edit-icon');
     await user.click(editButton);
 
     const originalPostMessage = 'Hello World 3';
     const editMessageTextField = screen.getByText(originalPostMessage);
     await user.type(editMessageTextField, 'Updated text');
 
-    const cancelButton = screen.getByText('Cancel');
+    const cancelButton = screen.getByLabelText('cancel-icon');
     await user.click(cancelButton);
 
     expect(screen.getByText(originalPostMessage)).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('Update Post', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await screen.findByText('Edit', { exact: false });
+    const editButton = await screen.findByLabelText('edit-icon');
     await user.click(editButton);
 
     const updatePostMessageBox = screen.getByText('Hello World 3');
@@ -104,7 +104,7 @@ describe('Update Post', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await screen.findByText('Edit', { exact: false });
+    const editButton = await screen.findByLabelText('edit-icon');
     await user.click(editButton);
 
     const updatePostMessageBox = screen.getByText('Hello World 3');
@@ -126,7 +126,7 @@ describe('Update Post', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await screen.findByText('Edit', { exact: false });
+    const editButton = await screen.findByLabelText('edit-icon');
     await user.click(editButton);
 
     expect(screen.getByText('Update Post')).toBeDisabled();
@@ -140,7 +140,7 @@ describe('Update Post', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await screen.findByText('Edit', { exact: false });
+    const editButton = await screen.findByLabelText('edit-icon');
     await user.click(editButton);
 
     const updatePostMessageBox = screen.getByText('Hello World 3');

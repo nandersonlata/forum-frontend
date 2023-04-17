@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Home from '../Home';
 import * as homeService from '../service/home.service';
@@ -36,7 +36,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     const deleteModal = await screen.findByTestId('delete-modal');
@@ -51,7 +51,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     expect(
@@ -70,7 +70,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     const yesButton = await screen.findByText('Yes');
@@ -94,7 +94,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     const yesButton = await screen.findByText('Yes');
@@ -114,7 +114,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     const cancelButton = await screen.findByText('Cancel');
@@ -135,7 +135,7 @@ describe('delete post modal', () => {
       </MemoryRouter>,
     );
 
-    const deleteLink = await screen.findByText('Delete', { exact: false });
+    const deleteLink = await screen.findByLabelText('delete-icon');
     await user.click(deleteLink);
 
     const yesButton = await screen.findByText('Yes');

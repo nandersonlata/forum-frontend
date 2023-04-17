@@ -10,6 +10,9 @@ import { getCurrentUserId } from '../auth/util';
 import { UpdatePost } from './post/UpdatePost';
 import { DisplayPost } from './post/DisplayPost';
 import { DeletePostModal } from './post/DeletePostModal';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const theme = createTheme();
 export const defaultPostToUpdate = {
@@ -114,24 +117,42 @@ export default function Home() {
                   {currentUserId === post.authorId &&
                     !post.editing &&
                     !postToUpdate.editing && (
-                      <Link to={'#'} onClick={() => startEditPost(post)}>
-                        Edit
+                      <Link
+                        aria-label="edit-icon"
+                        to={'#'}
+                        onClick={() => startEditPost(post)}
+                      >
+                        <EditIcon
+                          color="primary"
+                          sx={{ '&:hover': { color: 'black' } }}
+                        />
                       </Link>
                     )}
                   {currentUserId === post.authorId && post.editing && (
                     <Link
+                      aria-label="cancel-icon"
                       to={'#'}
                       onClick={() =>
                         completeEdit(post, postToUpdate.originalMessage)
                       }
                     >
-                      Cancel
+                      <CancelIcon
+                        color="primary"
+                        sx={{ '&:hover': { color: 'black' } }}
+                      />
                     </Link>
                   )}
                   <Box>
                     {currentUserId === post.authorId && !post.editing && (
-                      <Link to={'#'} onClick={handleOpen}>
-                        Delete
+                      <Link
+                        aria-label="delete-icon"
+                        to={'#'}
+                        onClick={handleOpen}
+                      >
+                        <DeleteIcon
+                          color="primary"
+                          sx={{ '&:hover': { color: 'black' } }}
+                        />
                       </Link>
                     )}
                   </Box>

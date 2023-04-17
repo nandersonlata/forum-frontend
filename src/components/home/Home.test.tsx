@@ -49,7 +49,9 @@ describe('Home', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getAllByText('Edit', { exact: false }).length).toBe(1);
+      expect(
+        screen.getAllByLabelText('edit-icon', { exact: false }).length,
+      ).toBe(1);
     });
   });
 
@@ -61,7 +63,7 @@ describe('Home', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getAllByText('Delete', { exact: false }).length).toBe(1);
+      expect(screen.getAllByLabelText('delete-icon').length).toBe(1);
     });
   });
 
@@ -73,9 +75,9 @@ describe('Home', () => {
       </MemoryRouter>,
     );
 
-    const editLink = await screen.findByText('Edit', { exact: false });
+    const editLink = await screen.findByLabelText('edit-icon');
     await user.click(editLink);
 
-    expect(screen.queryByText('Delete')).toBeNull();
+    expect(screen.queryByLabelText('delete-icon')).toBeNull();
   });
 });
