@@ -74,13 +74,13 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main">
+      <Container component="main" sx={{ marginTop: 2 }}>
+        <Navigation />
         <Box
           sx={{
-            marginTop: 2,
+            marginTop: 6,
           }}
         >
-          <Navigation />
           <Box>
             <CreatePost posts={posts} setPosts={setPosts} />
           </Box>

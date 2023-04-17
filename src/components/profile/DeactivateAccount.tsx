@@ -43,17 +43,17 @@ export default function DeactivateAccount() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main">
+      <Container component="main" sx={{ marginTop: 2 }}>
         <CssBaseline />
+        <Navigation />
         <Box
           sx={{
-            marginTop: 2,
+            marginTop: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Navigation />
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>

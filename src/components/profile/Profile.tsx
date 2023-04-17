@@ -9,24 +9,23 @@ import {
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import Logout from '../auth/Logout';
 import Navigation from '../nav/Navigation';
 
 export default function Profile() {
   const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main">
+      <Container component="main" sx={{ marginTop: 2 }}>
         <CssBaseline />
+        <Navigation />
         <Box
           sx={{
-            marginTop: 2,
+            marginTop: 6,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Navigation />
           <Typography component="h1" variant="h5">
             Update Profile Settings
           </Typography>
