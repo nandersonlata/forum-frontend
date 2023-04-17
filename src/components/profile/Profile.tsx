@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Logout from '../auth/Logout';
+import Navigation from '../nav/Navigation';
 
 export default function Profile() {
   const theme = createTheme();
@@ -25,7 +26,7 @@ export default function Profile() {
             alignItems: 'center',
           }}
         >
-          <Logout />
+          <Navigation />
           <Typography component="h1" variant="h5">
             Update Profile Settings
           </Typography>
