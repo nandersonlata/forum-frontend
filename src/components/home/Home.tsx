@@ -126,7 +126,7 @@ export default function Home() {
                     </Link>
                   )}
                   <Box>
-                    {currentUserId === post.authorId && (
+                    {currentUserId === post.authorId && !post.editing && (
                       <Link to={'#'} onClick={handleOpen}>
                         Delete
                       </Link>

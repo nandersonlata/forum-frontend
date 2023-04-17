@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import * as authUtil from '../auth/util/auth.util';
+import userEvent from '@testing-library/user-event';
 
 jest.mock('axios');
 
@@ -62,5 +63,19 @@ describe('Home', () => {
     await waitFor(() => {
       expect(screen.getAllByText('Delete', { exact: false }).length).toBe(1);
     });
+  });
+
+  it('does not show the delete link if editing the post', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const editLink = await screen.findByText('Edit', { exact: false });
+    await user.click(editLink);
+
+    expect(screen.queryByText('Delete')).toBeNull();
   });
 });
