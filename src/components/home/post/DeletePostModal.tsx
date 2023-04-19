@@ -27,6 +27,8 @@ export function DeletePostModal(props: DeletePostProps) {
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const handleClose = () => setOpen(false);
 
+  console.log(post);
+
   function handleDeletePost(post: PostDisplay) {
     deletePost({ postId: post.id })
       .then(() => {
@@ -51,7 +53,7 @@ export function DeletePostModal(props: DeletePostProps) {
         >
           {showErrorMessage && (
             <Typography sx={{ color: 'red', mb: 1 }}>
-              Something went wrong. Please try again later.{' '}
+              Something went wrong. Please try again later.
             </Typography>
           )}
           <Typography>Are you sure you want to delete this post?</Typography>

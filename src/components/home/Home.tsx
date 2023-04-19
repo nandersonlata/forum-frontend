@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 const theme = createTheme();
-export const defaultPostToUpdate = {
+export const defaultPost = {
   id: 0,
   message: '',
   authorId: 0,
@@ -30,9 +30,13 @@ export default function Home() {
   const [posts, setPosts] = useState<PostDisplay[]>([]);
   const [postToUpdate, setPostToUpdate] = useState<
     PostDisplay & { originalMessage: string }
-  >(defaultPostToUpdate);
+  >(defaultPost);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
-  const handleOpen = () => setDeleteModalOpen(true);
+  const [postToDelete, setPostToDelete] = useState<PostDisplay>(defaultPost);
+  const handleOpen = (post: PostDisplay) => {
+    setDeleteModalOpen(true);
+    setPostToDelete(post);
+  };
 
   const currentUserId = getCurrentUserId();
 
@@ -66,7 +70,7 @@ export default function Home() {
   function completeEdit(post: PostDisplay, newMessage: string) {
     post.editing = false;
     post.message = newMessage;
-    setPostToUpdate(defaultPostToUpdate);
+    setPostToUpdate(defaultPost);
   }
   function removePostFromPosts(postToRemove: PostDisplay) {
     setPosts(posts.filter((post) => post !== postToRemove));
@@ -147,7 +151,7 @@ export default function Home() {
                       <Link
                         aria-label="delete-icon"
                         to={'#'}
-                        onClick={handleOpen}
+                        onClick={() => handleOpen(post)}
                       >
                         <DeleteIcon
                           color="primary"
@@ -159,7 +163,7 @@ export default function Home() {
                     )}
                   </Box>
                 </Box>
-                {deleteModalOpen && (
+                {deleteModalOpen && postToDelete === post && (
                   <DeletePostModal
                     post={post}
                     open={deleteModalOpen}
