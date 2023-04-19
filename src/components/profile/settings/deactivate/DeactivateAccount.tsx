@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../nav/Navigation';
-import { deactivateAccount } from './service';
+import Navigation from '../../../nav/Navigation';
+import { deactivateAccount } from '../../service';
 
 export default function DeactivateAccount() {
   const [email, setEmail] = useState<string>('');

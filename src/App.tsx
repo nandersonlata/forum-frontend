@@ -3,7 +3,7 @@ import SignIn from './components/auth/Signin';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './components/auth/Signup';
 import Profile from './components/profile/Profile';
-import DeactivateAccount from './components/profile/DeactivateAccount';
+import DeactivateAccount from './components/profile/settings/deactivate/DeactivateAccount';
 import Home from './components/home/Home';
 import { RequireAuth } from './components/auth/PrivateRoute';
 import { NotFound } from './components/NotFound';

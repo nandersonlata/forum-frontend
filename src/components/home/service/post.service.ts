@@ -53,3 +53,16 @@ export async function deletePost(body: DeletePostRequestBody) {
   });
   return response.status;
 }
+
+export async function getUserPosts(
+  displayName: string,
+): Promise<GetPostsResponse[]> {
+  const token = getAccessToken();
+  const apiUrl = getConfigProperty('REACT_APP_API_URL');
+  const response = await axios.get(`${apiUrl}/posts/user/${displayName}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}

@@ -1,18 +1,20 @@
 import {
   Box,
-  Button,
   Container,
   createTheme,
   CssBaseline,
   ThemeProvider,
 } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Navigation from '../nav/Navigation';
 import { getCurrentUser } from './service';
 import { GetUserResponse } from './types';
 import { useEffect, useState } from 'react';
+import { ProfileSettings } from './settings/ProfileSettings';
+import { PostDisplay } from '../home/types';
+import { DisplayPost } from '../home/post/DisplayPost';
+import { getUserPosts } from '../home/service';
 
 export default function Profile() {
   const theme = createTheme();
@@ -20,12 +22,18 @@ export default function Profile() {
     id: 0,
     displayName: '',
   });
+  const [userPosts, setUserPosts] = useState<PostDisplay[]>([]);
+
   const url = useLocation();
-  console.log(loggedInUser);
-  console.log(url);
+  const userProfileDisplayName = url.pathname.split('/')[2];
 
   useEffect(() => {
-    getCurrentUser().then((user) => setLoggedInUser(user));
+    getCurrentUser().then((user) => {
+      setLoggedInUser(user);
+    });
+    getUserPosts(userProfileDisplayName).then((posts) => {
+      setUserPosts(posts);
+    });
   });
 
   return (
@@ -42,27 +50,25 @@ export default function Profile() {
           }}
         >
           {loggedInUser.displayName.length > 0 &&
-            url.pathname.endsWith(loggedInUser.displayName) && (
-              <Box aria-label={'profile-settings'}>
-                <Typography component="h1" variant="h5">
-                  Update Profile Settings
-                </Typography>
-                <Link
-                  to="/profile/deactivate"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Button
-                    id="sign-in-button"
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Deactivate Account
-                  </Button>
-                </Link>
-              </Box>
+            userProfileDisplayName === loggedInUser.displayName && (
+              <ProfileSettings />
             )}
+          {userPosts.map((post, index) => (
+            <Box
+              sx={{
+                borderRadius: '1px',
+                borderColor: 'gray',
+                borderStyle: 'solid',
+                mx: '32%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '1%',
+              }}
+              key={index}
+            >
+              <DisplayPost post={post} />
+            </Box>
+          ))}
         </Box>
       </Container>
     </ThemeProvider>

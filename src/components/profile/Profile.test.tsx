@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import Profile from './Profile';
 import * as profileService from './service/profile.service';
-
+import * as postService from '../home/service/post.service';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -37,6 +37,34 @@ describe('Profile', () => {
 
     await waitFor(() => {
       expect(screen.queryByLabelText('profile-settings')).not.toBeNull();
+    });
+  });
+
+  it('should display all the posts the user has made', async () => {
+    jest
+      .spyOn(profileService, 'getCurrentUser')
+      .mockResolvedValue({ id: 1, displayName: 'testName' });
+
+    jest.spyOn(postService, 'getUserPosts').mockResolvedValue([
+      {
+        id: 10,
+        message: 'hello world',
+        authorId: 1,
+        createdAt: 'someTime',
+        updatedAt: 'someTime',
+        author: {
+          displayName: 'testName',
+        },
+      },
+    ]);
+    render(
+      <MemoryRouter>
+        <Profile />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('hello world')).toBeInTheDocument();
     });
   });
 });
