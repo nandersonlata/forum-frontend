@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 import Navigation from '../nav/Navigation';
 import { getCurrentUser } from './service';
 import { GetUserResponse } from './types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ProfileSettings } from './settings/ProfileSettings';
 import { PostDisplay } from '../home/types';
 import { DisplayPost } from '../home/post/DisplayPost';
@@ -27,14 +27,14 @@ export default function Profile() {
   const url = useLocation();
   const userProfileDisplayName = url.pathname.split('/')[2];
 
-  useEffect(() => {
+  useMemo(() => {
     getCurrentUser().then((user) => {
       setLoggedInUser(user);
     });
     getUserPosts(userProfileDisplayName).then((posts) => {
       setUserPosts(posts);
     });
-  });
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

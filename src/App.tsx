@@ -14,14 +14,6 @@ function App() {
       <Route path="/" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route
-        path="/profile"
-        element={
-          <RequireAuth>
-            <Profile />
-          </RequireAuth>
-        }
-      />
-      <Route
         path="/profile/deactivate"
         element={
           <RequireAuth>
