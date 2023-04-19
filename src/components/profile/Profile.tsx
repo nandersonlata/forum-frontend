@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 import Navigation from '../nav/Navigation';
 import { getCurrentUser } from './service';
 import { GetUserResponse } from './types';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ProfileSettings } from './settings/ProfileSettings';
 import { PostDisplay } from '../home/types';
 import { DisplayPost } from '../home/post/DisplayPost';
