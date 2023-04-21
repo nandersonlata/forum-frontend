@@ -37,17 +37,7 @@ export default function CreatePost(props: CreatePostProps) {
         authorId,
       };
       const post = await createPost(createPostData);
-      const newPost: PostDisplay = {
-        id: post.id,
-        authorId: post.authorId,
-        message: post.message,
-        createdAt: post.createdAt,
-        editing: false,
-        author: {
-          displayName: post.author.displayName,
-        },
-      };
-      props.setPosts([newPost, ...props.posts]);
+      props.setPosts([post, ...props.posts]);
       setErrorOccurred(false);
     } catch (error) {
       setErrorOccurred(true);

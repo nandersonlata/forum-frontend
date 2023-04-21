@@ -20,6 +20,7 @@ export const defaultPost = {
   message: '',
   authorId: 0,
   createdAt: '',
+  updatedAt: '',
   author: {
     displayName: '',
   },

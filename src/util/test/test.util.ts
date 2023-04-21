@@ -8,6 +8,7 @@ export function createFakePostDisplay(
     message: faker.random.words(),
     authorId: Number(faker.random.numeric()),
     createdAt: faker.date.past().toDateString(),
+    updatedAt: faker.date.past().toDateString(),
     author: {
       displayName: faker.name.firstName() + faker.name.lastName(),
     },

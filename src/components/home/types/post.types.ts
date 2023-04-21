@@ -5,23 +5,13 @@ export type PostDisplay = {
   authorId: number;
 
   createdAt: string;
+  updatedAt: string;
 
   author: {
     displayName: string;
   };
 
   editing?: boolean;
-};
-
-export type GetPostsResponse = {
-  id: number;
-  authorId: number;
-  createdAt: string;
-  updatedAt: string;
-  message: string;
-  author: {
-    displayName: string;
-  };
 };
 
 export type CreatePostData = {
