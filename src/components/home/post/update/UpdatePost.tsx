@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { PostDisplay, UpdatePostRequestBody } from '../types';
-import { updatePost } from '../service';
+import { PostDisplay, UpdatePostRequestBody } from '../../types';
+import { updatePost } from '../../service';
 
 type UpdatePostProps = {
   post: PostDisplay;

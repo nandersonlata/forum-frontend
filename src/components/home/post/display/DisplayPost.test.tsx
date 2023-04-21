@@ -1,4 +1,4 @@
-import { PostDisplay } from '../types';
+import { PostDisplay } from '../../types';
 import React from 'react';
 import { DisplayPost } from './DisplayPost';
 import { render, screen } from '@testing-library/react';

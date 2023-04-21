@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { PostDisplay } from '../types';
-import { deletePost } from '../service';
+import { PostDisplay } from '../../types';
+import { deletePost } from '../../service';
 
 const style = {
   position: 'absolute' as 'absolute',

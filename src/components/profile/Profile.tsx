@@ -13,7 +13,7 @@ import { GetUserResponse } from './types';
 import { useMemo, useState } from 'react';
 import { ProfileSettings } from './settings/ProfileSettings';
 import { PostDisplay } from '../home/types';
-import { DisplayPost } from '../home/post/DisplayPost';
+import { DisplayPost } from '../home/post/display/DisplayPost';
 import { getUserPosts } from '../home/service';
 
 export default function Profile() {

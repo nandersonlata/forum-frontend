@@ -10,9 +10,9 @@ import {
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { PostDisplay } from '../types';
-import { createPost } from '../service';
-import { getCurrentUserId } from '../../auth/util';
+import { PostDisplay } from '../../types';
+import { createPost } from '../../service';
+import { getCurrentUserId } from '../../../auth/util';
 
 type CreatePostProps = {
   posts: PostDisplay[];

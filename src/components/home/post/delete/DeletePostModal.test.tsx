@@ -1,10 +1,10 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Home from '../Home';
-import * as homeService from '../service/post.service';
+import Home from '../../Home';
+import * as homeService from '../../service/post.service';
 import React from 'react';
-import * as authUtil from '../../auth/util/auth.util';
+import * as authUtil from '../../../auth/util/auth.util';
 import axios from 'axios';
 
 jest.mock('axios');
