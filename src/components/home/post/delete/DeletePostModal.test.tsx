@@ -6,6 +6,7 @@ import * as homeService from '../../service/post.service';
 import React from 'react';
 import * as authUtil from '../../../auth/util/auth.util';
 import axios from 'axios';
+import { createFakePostDisplay } from '../../../../util/test/test.util';
 
 jest.mock('axios');
 
@@ -15,16 +16,11 @@ describe('delete post modal', () => {
     // @ts-ignore
     axios.get.mockResolvedValue({
       data: [
-        {
-          id: 1,
+        createFakePostDisplay({
           authorId: 2,
-          createdAt: Date.now().toString(),
-          updatedAt: Date.now().toString(),
           message: 'Hello World',
-          author: {
-            displayName: 'fakename',
-          },
-        },
+          author: { displayName: 'fakename' },
+        }),
       ],
     });
   });

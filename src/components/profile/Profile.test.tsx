@@ -4,6 +4,7 @@ import React from 'react';
 import Profile from './Profile';
 import * as profileService from './service/profile.service';
 import * as postService from '../home/service/post.service';
+import { createFakePostDisplay } from '../../util/test/test.util';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -46,16 +47,11 @@ describe('Profile', () => {
       .mockResolvedValue({ id: 1, displayName: 'testName' });
 
     jest.spyOn(postService, 'getUserPosts').mockResolvedValue([
-      {
-        id: 10,
-        message: 'hello world',
+      createFakePostDisplay({
         authorId: 1,
-        createdAt: 'someTime',
-        updatedAt: 'someTime',
-        author: {
-          displayName: 'testName',
-        },
-      },
+        message: 'hello world',
+        author: { displayName: 'fakename' },
+      }),
     ]);
     render(
       <MemoryRouter>

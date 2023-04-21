@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Home from '../../Home';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { createFakePostDisplay } from '../../../../util/test/test.util';
 
 jest.mock('axios');
 
@@ -14,26 +15,16 @@ describe('Update Post', () => {
     // @ts-ignore
     axios.get.mockResolvedValue({
       data: [
-        {
-          id: 1,
+        createFakePostDisplay({
           authorId: 2,
-          createdAt: Date.now().toString(),
-          updatedAt: Date.now().toString(),
           message: 'Hello World 2',
-          author: {
-            displayName: 'fakename2',
-          },
-        },
-        {
-          id: 2,
+          author: { displayName: 'fakename2' },
+        }),
+        createFakePostDisplay({
           authorId: 3,
-          createdAt: Date.now().toString(),
-          updatedAt: Date.now().toString(),
           message: 'Hello World 3',
-          author: {
-            displayName: 'fakename3',
-          },
-        },
+          author: { displayName: 'fakename3' },
+        }),
       ],
     });
   });
