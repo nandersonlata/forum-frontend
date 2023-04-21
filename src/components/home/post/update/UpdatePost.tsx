@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { PostDisplay, UpdatePostRequestBody } from '../../types';
+import { Post, UpdatePostRequestBody } from '../../types';
 import { updatePost } from '../../service';
 
 type UpdatePostProps = {
-  post: PostDisplay;
+  post: Post;
   originalMessage: string;
-  completeEdit: (post: PostDisplay, newMessage: string) => void;
+  completeEdit: (post: Post, newMessage: string) => void;
 };
 
 export function UpdatePost(props: UpdatePostProps) {

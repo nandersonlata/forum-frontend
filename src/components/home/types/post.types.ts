@@ -1,4 +1,4 @@
-export type PostDisplay = {
+export type Post = {
   id: number;
   message: string;
 

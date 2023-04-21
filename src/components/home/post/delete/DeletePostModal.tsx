@@ -1,6 +1,6 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { PostDisplay } from '../../types';
+import { Post } from '../../types';
 import { deletePost } from '../../service';
 
 const style = {
@@ -16,10 +16,10 @@ const style = {
 };
 
 type DeletePostProps = {
-  post: PostDisplay;
+  post: Post;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  removePostFromPosts: (post: PostDisplay) => void;
+  removePostFromPosts: (post: Post) => void;
 };
 
 export function DeletePostModal(props: DeletePostProps) {
@@ -29,7 +29,7 @@ export function DeletePostModal(props: DeletePostProps) {
 
   console.log(post);
 
-  function handleDeletePost(post: PostDisplay) {
+  function handleDeletePost(post: Post) {
     deletePost({ postId: post.id })
       .then(() => {
         removePostFromPosts(post);

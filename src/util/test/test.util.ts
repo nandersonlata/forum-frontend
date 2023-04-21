@@ -1,8 +1,6 @@
-import { PostDisplay } from '../../components/home/types';
+import { Post } from '../../components/home/types';
 import { faker } from '@faker-js/faker';
-export function createFakePostDisplay(
-  props?: Partial<PostDisplay>,
-): PostDisplay {
+export function createFakePostDisplay(props?: Partial<Post>): Post {
   return {
     id: Number(faker.random.numeric()),
     message: faker.random.words(),

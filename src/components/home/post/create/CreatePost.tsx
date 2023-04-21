@@ -10,13 +10,13 @@ import {
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { PostDisplay } from '../../types';
+import { Post } from '../../types';
 import { createPost } from '../../service';
 import { getCurrentUserId } from '../../../auth/util';
 
 type CreatePostProps = {
-  posts: PostDisplay[];
-  setPosts: React.Dispatch<React.SetStateAction<PostDisplay[]>>;
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 };
 
 const theme = createTheme();

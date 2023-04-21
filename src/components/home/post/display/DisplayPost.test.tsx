@@ -1,4 +1,4 @@
-import { PostDisplay } from '../../types';
+import { Post } from '../../types';
 import React from 'react';
 import { DisplayPost } from './DisplayPost';
 import { render, screen } from '@testing-library/react';
@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { createFakePostDisplay } from '../../../../util/test/test.util';
 
 describe('Display Post', () => {
-  const post: PostDisplay = createFakePostDisplay();
+  const post: Post = createFakePostDisplay();
 
   it('should display the display name and message of the post', () => {
     render(

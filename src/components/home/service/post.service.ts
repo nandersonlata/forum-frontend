@@ -3,14 +3,14 @@ import axios from 'axios';
 import {
   CreatePostData,
   DeletePostRequestBody,
-  PostDisplay,
+  Post,
   UpdatePostRequestBody,
 } from '../types';
 import { getConfigProperty } from '../../../util/config';
 
 export async function createPost(
   createPostData: CreatePostData,
-): Promise<PostDisplay> {
+): Promise<Post> {
   const token = getAccessToken();
   const apiUrl = getConfigProperty('REACT_APP_API_URL');
   const response = await axios.post(`${apiUrl}/posts`, createPostData, {
@@ -21,7 +21,7 @@ export async function createPost(
   return response.data;
 }
 
-export async function getPosts(): Promise<PostDisplay[]> {
+export async function getPosts(): Promise<Post[]> {
   const token = getAccessToken();
   const apiUrl = getConfigProperty('REACT_APP_API_URL');
   const response = await axios.get(`${apiUrl}/posts`, {
@@ -54,9 +54,7 @@ export async function deletePost(body: DeletePostRequestBody) {
   return response.status;
 }
 
-export async function getUserPosts(
-  displayName: string,
-): Promise<PostDisplay[]> {
+export async function getUserPosts(displayName: string): Promise<Post[]> {
   const token = getAccessToken();
   const apiUrl = getConfigProperty('REACT_APP_API_URL');
   const response = await axios.get(`${apiUrl}/posts/user/${displayName}`, {

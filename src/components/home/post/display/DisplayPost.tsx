@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PostDisplay } from '../../types';
+import { Post } from '../../types';
 
 type DisplayPostProps = {
-  post: PostDisplay;
+  post: Post;
 };
 
 export function DisplayPost(props: DisplayPostProps) {

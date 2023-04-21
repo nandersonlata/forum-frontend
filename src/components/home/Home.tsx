@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import React, { useMemo, useState } from 'react';
 import Navigation from '../nav/Navigation';
 import CreatePost from './post/create/CreatePost';
-import { PostDisplay } from './types';
+import { Post } from './types';
 import { getPosts } from './service';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../auth/util';
@@ -28,13 +28,13 @@ export const defaultPost = {
 };
 
 export default function Home() {
-  const [posts, setPosts] = useState<PostDisplay[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [postToUpdate, setPostToUpdate] = useState<
-    PostDisplay & { originalMessage: string }
+    Post & { originalMessage: string }
   >(defaultPost);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
-  const [postToDelete, setPostToDelete] = useState<PostDisplay>(defaultPost);
-  const handleOpen = (post: PostDisplay) => {
+  const [postToDelete, setPostToDelete] = useState<Post>(defaultPost);
+  const handleOpen = (post: Post) => {
     setDeleteModalOpen(true);
     setPostToDelete(post);
   };
@@ -60,7 +60,7 @@ export default function Home() {
     });
   }, []);
 
-  function startEditPost(post: PostDisplay) {
+  function startEditPost(post: Post) {
     post.editing = true;
     setPostToUpdate({
       ...post,
@@ -68,12 +68,12 @@ export default function Home() {
     });
   }
 
-  function completeEdit(post: PostDisplay, newMessage: string) {
+  function completeEdit(post: Post, newMessage: string) {
     post.editing = false;
     post.message = newMessage;
     setPostToUpdate(defaultPost);
   }
-  function removePostFromPosts(postToRemove: PostDisplay) {
+  function removePostFromPosts(postToRemove: Post) {
     setPosts(posts.filter((post) => post !== postToRemove));
   }
 
