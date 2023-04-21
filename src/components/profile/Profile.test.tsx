@@ -4,7 +4,7 @@ import React from 'react';
 import Profile from './Profile';
 import * as profileService from './service/profile.service';
 import * as postService from '../home/service/post.service';
-import { createFakePostDisplay } from '../../util/test/test.util';
+import { createFakePost } from '../../util/test/test.util';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -47,7 +47,7 @@ describe('Profile', () => {
       .mockResolvedValue({ id: 1, displayName: 'testName' });
 
     jest.spyOn(postService, 'getUserPosts').mockResolvedValue([
-      createFakePostDisplay({
+      createFakePost({
         authorId: 1,
         message: 'hello world',
         author: { displayName: 'fakename' },

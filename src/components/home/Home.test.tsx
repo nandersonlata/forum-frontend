@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import * as authUtil from '../auth/util/auth.util';
 import userEvent from '@testing-library/user-event';
-import { createFakePostDisplay } from '../../util/test/test.util';
+import { createFakePost } from '../../util/test/test.util';
 
 jest.mock('axios');
 
@@ -15,7 +15,7 @@ describe('Home', () => {
     // @ts-ignore
     axios.get.mockResolvedValue({
       data: [
-        createFakePostDisplay({
+        createFakePost({
           authorId: 2,
           message: 'Hello World',
           author: { displayName: 'fakename' },

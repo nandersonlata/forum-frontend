@@ -10,7 +10,6 @@ export type Post = {
   author: {
     displayName: string;
   };
-
   editing?: boolean;
 };
 
