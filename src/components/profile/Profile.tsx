@@ -45,30 +45,30 @@ export default function Profile() {
           sx={{
             marginTop: 6,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            justifyContent: 'space-around',
           }}
         >
           {loggedInUser.displayName.length > 0 &&
             userProfileDisplayName === loggedInUser.displayName && (
               <ProfileSettings />
             )}
-          {userPosts.map((post, index) => (
-            <Box
-              sx={{
-                borderRadius: '1px',
-                borderColor: 'gray',
-                borderStyle: 'solid',
-                mx: '32%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '1%',
-              }}
-              key={index}
-            >
-              <DisplayPost post={post} />
-            </Box>
-          ))}
+          <Box sx={{ flexDirection: 'column', width: '25%' }}>
+            {userPosts.map((post, index) => (
+              <Box
+                sx={{
+                  borderRadius: '1px',
+                  borderColor: 'gray',
+                  borderStyle: 'solid',
+                  justifyContent: 'space-between',
+                  padding: '1%',
+                  my: 1,
+                }}
+                key={index}
+              >
+                <DisplayPost post={post} />
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>

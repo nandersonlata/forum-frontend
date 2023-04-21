@@ -5,9 +5,9 @@ import SignIn from './Signin';
 export const RequireAuth: FC<{ children: React.ReactElement }> = ({
   children,
 }) => {
-  const userIsLogged = isLoggedIn(); // Your hook to get login status
-
+  const userIsLogged = isLoggedIn();
   if (!userIsLogged) {
+    window.location.pathname = '/';
     return <SignIn />;
   }
   return children;
